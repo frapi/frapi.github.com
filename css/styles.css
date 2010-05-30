@@ -1,0 +1,87 @@
+body {
+    width: 700px;
+    margin: 100px auto;
+    font: 15px/24px "Georgia", serif;
+}
+
+h1, h2, h3, h4 {
+    font-family: "Trebuchet MS", sans-serif;
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 35px;
+    margin: 45px 0;
+}
+
+h2 {
+    font-size: 30px;
+    margin: 40px 0;
+}
+
+h3 {
+    font-size: 25px;
+    margin: 30px 0;
+}
+
+h4 {
+    font-size: 20px;
+    margin: 30px 0;
+}
+
+.anchor {
+    color: #000;
+    text-decoration: none;
+}
+
+pre {
+    overflow: auto;
+}
+
+pre {
+    margin-left: 30px;
+}
+
+blockquote .attribution {
+    text-align: right;
+    font-style: italic;
+}
+
+.figure {
+    text-align: center;
+}
+
+.figure img {
+    max-width: 640px;
+    padding: 30px;
+    border: 1px solid #999;
+}
+
+.figure .title {
+    font-style: italic;
+    text-align: left;
+}
+
+table {
+    margin: 1em auto;
+}
+
+/* li, blockquote elements should match same indentation */
+
+a.xref, a.ulink {
+    font-style: italic;
+}
+
+.note, .warning {
+    padding-left: 100px;
+    min-height: 66px;
+}
+
+.note {
+    background: url(/images/note.png) no-repeat top left;
+}
+
+.warning {
+    background: url(/images/warning.png) no-repeat top left;
+}
+
