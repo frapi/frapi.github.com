@@ -6,19 +6,19 @@
 
 <h1 id="installing_frapi">Installing FRAPI</h1>
 
-<p>As Frapi is currently under active beta development, the installation process
+<p>As FRAPI is currently under active beta development, the installation process
 isn't quite as smooth as we'd like it to be.  This chapter intends to make installing
-Frapi as simple and pain free as possible.  You might want to give the document a read-through
+FRAPI as simple and pain free as possible.  You might want to give the document a read-through
 before you begin the install.</p>
 
 <h2 id="requirements_and_dependencies">Requirements and Dependencies</h2>
 
-<h3>Frapi</h3>
+<h3>FRAPI</h3>
 
-<p>Frapi requires a PHP 5 interpreter (at least PHP 5.2.4) with a webserver configured to handle
+<p>FRAPI requires a PHP 5 interpreter (at least PHP 5.2.4) with a webserver configured to handle
 PHP scripts correctly.</p>
 
-<p>Frapi also has dependencies on the following modules:</p>
+<p>FRAPI also has dependencies on the following modules:</p>
 
 <ul>
     <li><a href="http://php.net/manual/en/book.apc.php">APC</a>: Required for caching of actions, errors, etc</li>
@@ -38,20 +38,20 @@ PHP scripts correctly.</p>
 </ul>
 
 
-<h2>Getting Frapi</h2>
+<h2>Getting FRAPI</h2>
 
-<p>You can get Frapi in one of two ways: cloning the Frapi repository or downloading the latest Frapi source as a tarball.</p>
+<p>You can get FRAPI in one of two ways: cloning the FRAPI repository or downloading the latest FRAPI source as a tarball.</p>
 
-<h3>Cloning the Frapi Repository</h3>
+<h3>Cloning the FRAPI Repository</h3>
 
-<p>Go to the directory where you want to install Frapi and do the following:</p>
+<p>Go to the directory where you want to install FRAPI and do the following:</p>
 <p><code>git clone git://github.com/frapi/frapi.git</code></p>
-<p>Since Frapi contains a submodule (<a href="http://github.com/till/armchair">Armchair</a>), you'll also need to:</p>
+<p>Since FRAPI contains a submodule (<a href="http://github.com/till/armchair">Armchair</a>), you'll also need to:</p>
 <p><code>cd frapi</code><br />
 <code>git submodule init</code><br />
 <code>git submodule update</code></p>
 
-<p>(Later, when updating Frapi from Git, be sure to use the <code>git submodule update</code> command.)</p>
+<p>(Later, when updating FRAPI from Git, be sure to use the <code>git submodule update</code> command.)</p>
 
 <h3>Downloading the Tarball</h3>
 <p>Go to <a href="https://github.com/frapi/frapi/downloads">https://github.com/frapi/frapi/downloads</a> and download the tar.gz to your install directory.</p>
@@ -61,12 +61,12 @@ PHP scripts correctly.</p>
 
 <p>You're about see a lot of references to something called
 <code>FRAPI_PATH</code>.  This is simply a shorthand way of saying, "Where
-you've chosen to install Frapi."  If you've placed the Frapi codebase in <code>/var/www/frapi</code>,
+you've chosen to install FRAPI."  If you've placed the FRAPI codebase in <code>/var/www/frapi</code>,
 then you should read <code>FRAPI_API</code> as <code>/var/www/frapi</code>.</p>
 
 <h3>Directory Ownership</h3>
 
-<p>Since Frapi is a web application, the web-user will need to have varying
+<p>Since FRAPI is a web application, the web-user will need to have varying
 levels of access to <code>FRAPI_PATH</code>. This user is sometimes apache,
 nobody, www-data, or some other user (please refer to the documentation for
 your web server and operating system to determine the appropriate user if you
