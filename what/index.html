@@ -1,12 +1,46 @@
-<title>What is  FRAPI</title>
+<title>What is FRAPI</title>
 
 <meta charset="utf-8">
 
-<link rel="stylesheet" href="/css/styles.css">
+<link rel="stylesheet" href="../css/styles.css">
 
-<h1>What FRAPI</h1>
+<h1>What is FRAPI</h1>
 
-<p>This is coming too. If you are reading this you are either on IRC or someone interested in FRAPI. Just ask on IRC what's the story with the book :-)</p>
+<p>
+    FRAPI is a new type of framework that embraces the standards and mindset of how the web is modeled. Instead of being a general purpose framework like the <ref id="2">Zend Framework</ref>, <ref id="3">Symfony</ref>, <ref id="4">Cake</ref>, <ref id="5">Lithium</ref>, etc. which are great for building web applications, FRAPI aims at removing the whole frontend layer complexity that handling REST calls can bring.
+</p>
+
+<p>
+    FRAPI is a RESTful API Framework that allows developers to rapidly develop RESTful APIs that are easily scalable and highly performant. FRAPI consists of two specific parts: The administration interface and the public API.
+</p>
+
+<h2 id="administrationinterface">The Administration Interface</h2>
+<p>
+    The FRAPI administration interface is the section of the FRAPI framework where API developers go to easily manage their APIs. The administration interface allows developers to easily create API calls &mdash; resources, actions, URIs &mdash; it allows developer to manage API errors, output formats and also test their APIs. Another very interesting aspect of the FRAPI administration interface is the ability to generate third party API documentation.
+</p>
+
+<p>
+    When creating API calls &mdash; resources, actions, URIs, etc &mdash; the administration interface will also generate PHP code that is used by the developers to handle the different REST calls. The only thing left to do for developers is to write their business logic and datasource connectors and plug them in the generated FRAPI REST handlers &mdash; <ref id="1"><em>executeGet()</em>, <em>executePost()</em>, <em>executePut()</em>, <em>executeDelete()</em>, <em>executeHead()</em></ref>
+</p>
+
+<p>Because of its nature, the administration interface asks the developers who are managing their API to enter a description when creating a new <em>action</em> and when creating a new <em>error</em>. From within the administration interface, an API owner can generate significantly relevant documentation that can be then passed down as an API reference to third party developers &mdash; The generated documentation can be exported to HTML, Text, Markdown or PDF.
+</p>
+
+<h2 id="publicapi">The public API</h2>
+
+<!-- Don't like this.. @FIXME -->
+<p>
+    When a developer is done creating and generating actions using the administration interface, the web-service (API) becomes available to third party companies and third party developers. By opening your data and distributing it to other marketing channels, you can easily broaden your market and gain more customers, adopters and users of your service/product.
+</p>
+
+<h3 id="atheart">At heart</h3>
+<p>The essence of the FRAPI public API lies in it's simplicity. Whilst the administration interface can get complex, the public API really only creates a bridge between your data and third party developers without having you worrying about how the data has to be formatted or even if you are correctly handling the requests from your customers. The public API takes care of handling the calls and returning the desired results to your API consumers.</p>
+
+<h3 id="underlyingcore">Powered by</h3>
+<p>
+    Even though the administration interface of FRAPI uses the Zend Framework as the underlying technology, the FRAPI public API core is not. The reason for that is that FRAPI is fined tuned and too specific to run on such a general framework. The FRAPI public API heavily relies on opcode caches &mdash; as such as <ref id="6">APC</ref>, <ref id="7">WinCache</ref>, etc &mdash; in order to effectively retrieve routes, errors, actions, partners and output types.
+</p>
+
 
 <script src="/js/script.js"></script>
 
