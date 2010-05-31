@@ -85,3 +85,7 @@ a.xref, a.ulink {
     background: url(/images/warning.png) no-repeat top left;
 }
 
+.copyright {
+    margin-top: 30px;
+    text-align: center;
+}
