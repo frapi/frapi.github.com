@@ -4,29 +4,112 @@
 
 <link rel="stylesheet" href="/css/styles.css">
 
-<h1>Installing FRAPI</h1>
+<h1 id="installing_frapi">Installing FRAPI</h1>
 
-<p>Apache CouchDB is one of a new breed of database management systems. This chapter explains why there’s a need for new systems as well as the motivations behind building CouchDB.
+<p>As Frapi is currently under active beta development, the installation process
+isn't quite as smooth as we'd like it to be.  This chapter intends to make installing
+Frapi as simple and pain free as possible.  You might want to give the document a read-through
+before you begin the install.</p>
 
-<h2 id="secondlevel">Second level header</h2>
+<h2 id="requirements_and_dependencies">Requirements and Dependencies</h2>
 
-<p>Some second level content with <em>em'ed data</em> here and there.
+<h3>Frapi</h3>
 
+<p>Frapi requires a PHP 5 interpreter (at least PHP 5.2.4) with a webserver configured to handle
+PHP scripts correctly.</p>
+
+<p>Frapi also has dependencies on the following modules:</p>
+
+<ul>
+    <li><a href="http://php.net/manual/en/book.apc.php">APC</a>: Required for caching of actions, errors, etc</li>
+    <li><a href="http://pecl.php.net/pecl_http">pecl_http</a></li>
+    <li><a href="http://pear.php.net/">PEAR</a></li>
+    <li><a href="http://pear.php.net/HTTP_Request2">PEAR::HTTP_Request2</a>:
+    Required by the bundled ArmChair package. At some point this may be
+    replaced by pecl_http.</li>
+</ul>
+
+<h3>Unit Tests</h3>
+
+<ul>
+    <li><a href="http://www.phpunit.de/">PHPUnit</a>: Required for running unit tests</li>
+    <li><a href="http://xdebug.org/">XDebug</a>: Required for generating 
+    <a href="http://www.phpunit.de/manual/current/en/code-coverage-analysis.html">code coverage analysis</a> reports</li>
+</ul>
+
+
+<h2>Getting Frapi</h2>
+
+<p>You can get Frapi in one of two ways: cloning the Frapi repository or downloading the latest Frapi source as a tarball.</p>
+
+<h3>Cloning the Frapi Repository</h3>
+
+<p>Go to the directory where you want to install Frapi and do the following:</p>
+<p><code>git clone git://github.com/frapi/frapi.git</code></p>
+<p>Since Frapi contains a submodule (<a href="http://github.com/till/armchair">Armchair</a>), you'll also need to:</p>
+<p><code>cd frapi</code><br />
+<code>git submodule init</code><br />
+<code>git submodule update</code></p>
+
+<p>(Later, when updating Frapi from Git, be sure to use the <code>git submodule update</code> command.)</p>
+
+<h3>Downloading the Tarball</h3>
+<p>Go to <a href="https://github.com/frapi/frapi/downloads">https://github.com/frapi/frapi/downloads</a> and download the tar.gz to your install directory.</p>
+<p>Uncompress the tar using the <code>tar -xzvf latest.tar.gz</code> command.</p>
+
+<h2>Setting Directory and File Permissions</h2>
+
+<p>You're about see a lot of references to something called
+<code>FRAPI_PATH</code>.  This is simply a shorthand way of saying, "Where
+you've chosen to install Frapi."  If you've placed the Frapi codebase in <code>/var/www/frapi</code>,
+then you should read <code>FRAPI_API</code> as <code>/var/www/frapi</code>.</p>
+
+<h3>Directory Ownership</h3>
+
+<p>Since Frapi is a web application, the web-user will need to have varying
+levels of access to <code>FRAPI_PATH</code>. This user is sometimes apache,
+nobody, www-data, or some other user (please refer to the documentation for
+your web server and operating system to determine the appropriate user if you
+are not sure). During development and testing (including production, in some
+cases) you will need access to those files as well.</p>
+
+<ul>
+    <li>First, determine the web-user's group. This is usually named the same as the web-user</li>
+    <li>Second, add yourself to the web-user group if you are not already a member 
+    (see <a href="http://www.cyberciti.biz/faq/howto-linux-add-user-to-group/">Linux: Adding a user to a group</a>)</li>
+    <li>Finally, issue the chown command to change ownership of <code>FRAPI_PATH</code> to yourself and the web-user group</li>
+</ul>
+
+<pre>chown -R username.web-user FRAPI_PATH</pre>
+
+<h3>Directory Permissions</h3>
+
+<p>You need to make sure that both
+<code>FRAPI_PATH/src/frapi/custom/Action/</code> and
+<code>FRAPI_PATH/src/frapi/admin/application/config/app/</code> are readable,
+writable, and executable by the web-user, but only readable and executable to
+everyone else <code>(0775)</code>. You also want to make sure that the XML
+files in <code>FRAPI_PATH/src/frapi/admin/application/config/app/</code> are
+readable and writable by the web-user, but only readable to everyone else
+<code>(0664)</code>.</p>
 
 <pre>
-Some information in a "pre" tag
+chmod 775 FRAPI_PATH/src/frapi/custom/Action
+
+chmod 775 FRAPI_PATH/src/frapi/admin/application/config/app
+chmod 664 FRAPI_PATH/src/frapi/admin/application/config/app/*.xml
 </pre>
 
-<p> Something here.
+<p>If you're using Linux you could run the <code>FRAPI_PATH/setup.sh</code> script. The <code>setup.sh</code> script will
+initialize the Armchair submodule and set directory permissions with the commands you see above.</p>
 
-<p>This is another p
+<pre>sudo sh setup.sh</pre>
 
-<figure id="figure/1">
+<h2>Configuring your Webserver</h2>
 
-<img src="/figures/1.png">
+<h3>Configuring Apache</h3>
 
-<figcaption>Example of caption
+<h3>Configuring nginx</h3>
 
-</figure>
 <script src="/js/script.js"></script>
 
