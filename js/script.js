@@ -3,7 +3,6 @@
 
 scripts = [
     "http://www.google-analytics.com/ga.js",
-    "http://code.jquery.com/jquery-latest.min.js"
 ]
 
 // load hosted scripts
@@ -13,8 +12,9 @@ for(i = 0; i < scripts.length; i++) {
 
 
 // run after hosted scripts have loaded
-document.onready = function() {
+$(document).ready(function() {
     // catch all errors
+    $('include').include();
     try {
         // wrap all elements with an id with an anchor
         $("*/[id!='']").wrap(function() {
@@ -26,4 +26,4 @@ document.onready = function() {
     } catch (error) {
         // uh oh, better have a debug console handy
     }
-}
+});

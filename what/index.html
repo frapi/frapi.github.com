@@ -1,8 +1,10 @@
+<script type="text/javascript" charset="utf-8" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/jquery.include.js"></script>
+<script src="/js/script.js"></script>
+
 <title>What is FRAPI</title>
 
-<meta charset="utf-8">
-
-<link rel="stylesheet" href="/css/styles.css">
+<include src="/includes/header.html"></include>
 
 <h1>What is FRAPI</h1>
 
@@ -41,6 +43,4 @@
     Even though the administration interface of FRAPI uses the Zend Framework as the underlying technology, the FRAPI public API core is not. The reason for that is that FRAPI is fined tuned and too specific to run on such a general framework. The FRAPI public API heavily relies on opcode caches &mdash; as such as <ref id="6">APC</ref>, <ref id="7">WinCache</ref>, etc &mdash; in order to effectively retrieve routes, errors, actions, partners and output types.
 </p>
 
-
-<script src="/js/script.js"></script>
-
+<include src="/includes/footer.html"></include>
