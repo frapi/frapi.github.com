@@ -2,20 +2,57 @@
 <script type="text/javascript" charset="utf-8" src="/js/jquery.include.js"></script>
 <script src="/js/script.js"></script>
 
+<!-- @todo add anchors, fix links -->
+
 <title>Installing FRAPI</title>
 
 <include src="/includes/header.html"></include>
 
-<h1 id="installing_frapi">Installing FRAPI</h1>
+<h1 id="frapi.installing">Installing FRAPI</h1>
 
 <p>As FRAPI is currently under active beta development, the installation process
 isn't quite as smooth as we'd like it to be.  This chapter intends to make installing
 FRAPI as simple and pain free as possible.  You might want to give the document a read-through
 before you begin the install.</p>
 
-<h2 id="requirements_and_dependencies">Requirements and Dependencies</h2>
+<ul>
+    <li><a href="#frapi.installing.requirements.and.dependencies">Requirements and Dependencies</a>
+        <ul>
+            <li><a href="#frapi.installing.requirements.and.dependencies.frapi">FRAPI</a></li>
+            <li><a href="#frapi.installing.requirements.and.dependencies.unit.tests">Unit Tests</a></li>
+        </ul>
+    </li>
+    <li><a href="#frapi.installing.getting.frapi">Getting FRAPI</a>
+        <ul>
+            <li><a href="#frapi.installing.getting.frapi.cloning">Cloning the FRAPI Repository</a></li>
+            <li><a href="#frapi.installing.getting.frapi.downloading.tarball">Downloading the Tarball</a></li>
+        </ul>
+    </li>
+    <li><a href="#frapi.installing.directory.and.file.permissions">Setting Directory and File Permissions</a>
+        <ul>
+            <li><a href="#frapi.installing.directory.and.file.permissions.ownership">Directory Ownership</a></li>
+            <li><a href="#frapi.installing.directory.and.file.permissions.permissions">Directory Permissions</a></li>
+        </ul>
+    </li>
+    <li><a href="#frapi.installing.configuring.apache">Configuring Apache</a>
+        <ul>
+            <li><a href="#frapi.installing.configuring.apache.admin.vhost">Setting up FRAPI's administration interface virtual host</a></li>
+            <li><a href="#frapi.installing.configuring.apache.api.vhost">Setting up the API frontend</a></li>
+        </ul>
+    </li>
+    <li><a href="#frapi.installing.configuring.nginx">Configuring Nginx</a>
+        <ul>
+            <li><a href="#frapi.installing.configuring.nginx.before">Before we Start</a></li>
+            <li><a href="#frapi.installing.configuring.nginx.fastcgi.params">FastCGI Parameters</a></li>
+            <li><a href="#frapi.installing.configuring.nginx.admin.vhost">Setting up FRAPI's administration interface virtual host</a></li>
+            <li><a href="#frapi.installing.configuring.nginx.api.vhost">Setting up the API frontend</a></li>
+        </ul>
+    </li>
+</ul>
 
-<h3>FRAPI</h3>
+<h2 id="frapi.installing.requirements.and.dependencies">Requirements and Dependencies</h2>
+
+<h3 id="frapi.installing.requirements.and.dependencies.frapi">FRAPI</h3>
 
 <p>FRAPI requires a PHP 5 interpreter (at least PHP 5.2.4) with a webserver configured to handle
 PHP scripts correctly.</p>
@@ -27,46 +64,47 @@ PHP scripts correctly.</p>
     <li><a href="http://pecl.php.net/pecl_http">pecl_http</a></li>
     <li><a href="http://pear.php.net/">PEAR</a></li>
     <li><a href="http://pear.php.net/HTTP_Request2">PEAR::HTTP_Request2</a>:
-    Required by the bundled ArmChair package. At some point this may be
+    Required by the bundled <a href="http://github.com/till/armchair">ArmChair</a> package. At some point this may be
     replaced by pecl_http.</li>
 </ul>
 
-<h3>Unit Tests</h3>
+<h3 id="frapi.installing.requirements.and.dependencies.unit.tests">Unit Tests</h3>
 
 <ul>
     <li><a href="http://www.phpunit.de/">PHPUnit</a>: Required for running unit tests</li>
     <li><a href="http://xdebug.org/">XDebug</a>: Required for generating 
     <a href="http://www.phpunit.de/manual/current/en/code-coverage-analysis.html">code coverage analysis</a> reports</li>
+    <li>APC must be enabled on the command line (See <a href="http://www.php.net/manual/en/apc.configuration.php#ini.apc.enable-cli">apc.enable_cli</a>)</li>
 </ul>
 
 
-<h2>Getting FRAPI</h2>
+<h2 id="frapi.installing.getting.frapi">Getting FRAPI</h2>
 
 <p>You can get FRAPI in one of two ways: cloning the FRAPI repository or downloading the latest FRAPI source as a tarball.</p>
 
-<h3>Cloning the FRAPI Repository</h3>
+<h3 id="frapi.installing.getting.frapi.cloning">Cloning the FRAPI Repository</h3>
 
 <p>Go to the directory where you want to install FRAPI and do the following:</p>
 <p><code>git clone git://github.com/frapi/frapi.git</code></p>
-<p>Since FRAPI contains a submodule (<a href="http://github.com/till/armchair">Armchair</a>), you'll also need to:</p>
+<p>Since FRAPI contains a submodule (<a href="http://github.com/till/armchair">ArmChair</a>), you'll also need to:</p>
 <p><code>cd frapi</code><br />
 <code>git submodule init</code><br />
 <code>git submodule update</code></p>
 
 <p>(Later, when updating FRAPI from Git, be sure to use the <code>git submodule update</code> command.)</p>
 
-<h3>Downloading the Tarball</h3>
+<h3 id="frapi.installing.getting.frapi.downloading.tarball">Downloading the Tarball</h3>
 <p>Go to <a href="https://github.com/frapi/frapi/downloads">https://github.com/frapi/frapi/downloads</a> and download the tar.gz to your install directory.</p>
 <p>Uncompress the tar using the <code>tar -xzvf latest.tar.gz</code> command.</p>
 
-<h2>Setting Directory and File Permissions</h2>
+<h2 id="frapi.installing.directory.and.file.permissions">Setting Directory and File Permissions</h2>
 
 <p>You're about see a lot of references to something called
 <code>FRAPI_PATH</code>.  This is simply a shorthand way of saying, "Where
 you've chosen to install FRAPI."  If you've placed the FRAPI codebase in <code>/var/www/frapi</code>,
 then you should read <code>FRAPI_API</code> as <code>/var/www/frapi</code>.</p>
 
-<h3>Directory Ownership</h3>
+<h3 id="frapi.installing.directory.and.file.permissions.ownership">Directory Ownership</h3>
 
 <p>Since FRAPI is a web application, the web-user will need to have varying
 levels of access to <code>FRAPI_PATH</code>. This user is sometimes apache,
@@ -84,7 +122,7 @@ cases) you will need access to those files as well.</p>
 
 <pre>chown -R username.web-user FRAPI_PATH</pre>
 
-<h3>Directory Permissions</h3>
+<h3 id="frapi.installing.directory.and.file.permissions.permissions">Directory Permissions</h3>
 
 <p>You need to make sure that both
 <code>FRAPI_PATH/src/frapi/custom/Action/</code> and
@@ -103,14 +141,211 @@ chmod 664 FRAPI_PATH/src/frapi/admin/application/config/app/*.xml
 </pre>
 
 <p>If you're using Linux you could run the <code>FRAPI_PATH/setup.sh</code> script. The <code>setup.sh</code> script will
-initialize the Armchair submodule and set directory permissions with the commands you see above.</p>
+initialize the <a href="http://github.com/till/armchair">ArmChair</a> submodule and set directory permissions with the commands you see above.</p>
 
 <pre>sudo sh setup.sh</pre>
 
-<h2>Configuring your Webserver</h2>
+<h2 id="frapi.installing.configuring.apache">Configuring Apache</h2>
 
-<h3>Configuring Apache</h3>
+<h3 id="frapi.installing.configuring.apache.admin.vhost">Setting up FRAPI's Administration Interface Virtual Host</h3> 
 
-<h3>Configuring nginx</h3>
+<p>In order to setup FRAPI's admin interface, you'll need to setup a virtual
+host with the following configuration:</p> 
+
+<pre> 
+&lt;VirtualHost *:80&gt;
+    ServerName admin.frapi
+    DirectoryIndex index.php
+    ServerAdmin admin@api.frapi
+
+    DocumentRoot FRAPI_PATH/src/frapi/admin/public
+    &lt;Directory FRAPI_PATH/src/frapi/admin/public&gt;
+        AllowOverride All
+        Order deny,allow
+        Allow from All
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</pre> 
+
+<p>Make sure the server name (hostname of your api &#8211; if developing
+locally you may want to add admin.frapi to your /etc/hosts file) and the
+FRAPI_PATH (Defined in <a
+    href="#frapi.installing.directory.and.file.permissions">Setting Directory and File Permissions</a>) are correct then restart Apache.</p> 
+
+<p>If you open your browser to <a href="http://admin.frapi">http://admin.frapi</a> you should now see a
+screen with a login and password (Username: <strong>admin</strong>, password:
+<strong>password</strong>)</p> 
+
+<h3 id="frapi.installing.configuring.apache.api.vhost">Setting up the <span class="caps">API</span> frontend</h3> 
+
+<p>The <span class="caps">API</span> frontend is the <span
+    class="caps">API</span> that third party developers will be accessing. Very
+much like the administration interface, add a new site to your available sites
+in Apache with the following configuration:</p> 
+
+<pre> 
+&lt;VirtualHost *:80&gt;
+    ServerName api.frapi
+    ServerAdmin admin@api.frapi
+    DocumentRoot FRAPI_PATH/src/frapi/public
+ 
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule /([a-zA-Z]+)\.([a-z]+)? /index.php?action=$1&amp;format=$2 [QSA,L]
+    RewriteRule /([a-zA-Z]+)(\.*)? /index.php?action=$1 [QSA,L]
+                  
+    &lt;Directory FRAPI_PATH/src/frapi/public&gt;
+        AllowOverride All
+        Order deny,allow
+        Allow from All
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</pre> 
+
+<p>Again, make sure the server name (hostname of your api &#8211; if developing
+locally you may want to add api.frapi to your /etc/hosts file) and the
+FRAPI_PATH (Defined in <a
+    href="#frapi.installing.directory.and.file.permissions">Setting Directory and File Permissions</a>) are correct then restart Apache.</p> 
+
+<p>If you open your browser to <a href="http://api.frapi">http://api.frapi</a> you should now see an <span
+    class="caps">XML</span> payload that has an error that has the code
+<strong>ERROR_INVALID_ACTION_REQUEST</strong></p>
+
+<h2 id="frapi.installing.configuring.nginx">Configuring Nginx</h2>
+
+<p><strong>NOTE</strong>: At echolibre we run nearly all our FRAPI services
+under Nginx for performance reasons. We therefore recommend using Nginx instead
+of Apache whenever possible when it comes to FRAPI.</p> 
+
+<h3 id="frapi.installing.configuring.nginx.before">Before we Start</h3> 
+
+<p>This documentation section assumes that you have Nginx setup to run with
+<span class="caps">PHP</span> as FastCGI. If you haven't setup
+php-fastcgi and Nginx, please read this <a
+    href="http://till.klampaeckel.de/blog/archives/44-Nginx+PHP+FastCGI-Testing-your-web-application-with-bleeding-edge-PHP.html">blog
+    post</a> as it will be vital to your understanding and fulfillment of
+this setup.</p> 
+
+<h3 id="frapi.installing.configuring.nginx.fastcgi.params">FastCGI Parameters</h3> 
+
+<p>Here's a list of the parameters you'll need in your fastcgi_params in order
+for Nginx and FRAPI to work nicely together:</p> 
+
+<blockquote> 
+    <p>fastcgi_param  QUERY_STRING       $query_string;<br /> 
+    fastcgi_param  REQUEST_METHOD     $request_method;<br /> 
+    fastcgi_param  CONTENT_TYPE       $content_type;<br /> 
+    fastcgi_param  CONTENT_LENGTH     $content_length;</p> 
+</blockquote> 
+
+<blockquote> 
+    <p>fastcgi_param  SCRIPT_NAME        $fastcgi_script_name;<br /> 
+    fastcgi_param  REQUEST_URI        $request_uri;<br /> 
+    fastcgi_param  DOCUMENT_URI       $document_uri;<br /> 
+    fastcgi_param  DOCUMENT_ROOT      $document_root;<br /> 
+    fastcgi_param  SERVER_PROTOCOL    $server_protocol;</p> 
+</blockquote> 
+
+<blockquote> 
+    <p>fastcgi_param  GATEWAY_INTERFACE  <span class="caps">CGI</span>/1.1;<br /> 
+    fastcgi_param  SERVER_SOFTWARE    nginx/$nginx_version;</p> 
+</blockquote> 
+
+<blockquote> 
+    <p>fastcgi_param  REMOTE_ADDR        $remote_addr;<br /> 
+    fastcgi_param  REMOTE_PORT        $remote_port;<br /> 
+    fastcgi_param  SERVER_ADDR        $server_addr;<br /> 
+    fastcgi_param  SERVER_PORT        $server_port;<br /> 
+    fastcgi_param  SERVER_NAME        $server_name;</p> 
+</blockquote> 
+
+<blockquote> 
+    <p>fastcgi_param  REDIRECT_STATUS    200;</p> 
+</blockquote> 
+
+<p>If you are uncertain about where those go, please look at the <a
+    href="http://wiki.nginx.org/NginxHttpFcgiModule">Nginx documentation</a>
+for fastcgi params or look in your /etc/nginx/fastcgi_params configuration
+file.</p> 
+
+<h3 id="frapi.installing.configuring.nginx.admin.vhost">Setting up FRAPI's Administration Interface Virtual Host</h3> 
+
+<p>In order to setup FRAPI's admin interface, you'll need to setup a virtual
+host with the following configuration:</p> 
+
+<pre> 
+server {
+    listen   80;
+    server_name  admin.frapi;
+    access_log  /var/log/nginx/admin.frapi/access.log;
+    
+    location / {
+        if (-f $request_filename) {
+            break;
+        }
+        
+        rewrite  ^/(.*)$  /index.php?$1  last;
+        root   FRAPI_PATH/src/frapi/admin/public;
+        index  index.php;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  FRAPI_PATH/src/frapi/admin/public/$fastcgi_script_name;
+        include fastcgi_params;
+    }
+}
+</pre> 
+
+<p>Make sure the server name (hostname of your api &#8211; if developing
+locally you may want to add admin.frapi to your /etc/hosts file) and the
+FRAPI_PATH (Defined in <a
+    href="#frapi.installing.directory.and.file.permissions">Setting Directory and File Permissions</a>) are correct then restart Nginx.</p> 
+
+<p>If you open your browser to <a href="http://admin.frapi">http://admin.frapi</a> you should now see a
+screen with a login and password (Username: <strong>admin</strong>, password:
+<strong>password</strong>)</p> 
+
+<h3 id="frapi.installing.configuring.nginx.api.vhost">Setting up the <span class="caps">API</span> frontend</h3> 
+
+<p>The <span class="caps">API</span> frontend is the <span
+    class="caps">API</span> that third party developers will be accessing. Very
+much like the administration interface, add a new site to your available sites
+in Nginx with the following configuration:</p> 
+
+<pre> 
+server {
+    listen   80;
+    server_name  api.frapi;
+    access_log  /var/log/nginx/api.frapi/access.log;
+                                                                     
+    location / {
+        if (-e $request_filename) {
+            break;
+        }
+                                                                                                                         
+        rewrite  ^/(.*)$  /index.php?$1  last;
+        root     FRAPI_PATH/src/frapi/public;
+        index    index.php;
+    }
+                                                                                                                                              
+    location ~ ^/.*\.php$ {
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  FRAPI_PATH/src/frapi/public/$fastcgi_script_name;
+        include fastcgi_params;
+    }
+}
+</pre> 
+
+<p>Again, Make sure the server name (hostname of your api &#8211; if developing
+locally you may want to add api.frapi to your /etc/hosts file) and the
+FRAPI_PATH (<a
+    href="#frapi.installing.directory.and.file.permissions">Setting Directory and File Permissions</a>) are correct then restart Nginx.</p> 
+
+<p>If you open your browser to <a href="http://api.frapi">http://api.frapi</a> you should now see an <span
+    class="caps">XML</span> payload that has an error that has the code
+<strong>ERROR_INVALID_ACTION_REQUEST</strong></p>
 
 <include src="/includes/footer.html"></include>
