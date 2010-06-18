@@ -126,18 +126,18 @@ cases) you will need access to those files as well.</p>
 
 <p>You need to make sure that both
 <code>FRAPI_PATH/src/frapi/custom/Action/</code> and
-<code>FRAPI_PATH/src/frapi/admin/application/config/app/</code> are readable,
+<code>FRAPI_PATH/src/frapi/custom/Config</code> are readable,
 writable, and executable by the web-user, but only readable and executable to
 everyone else <code>(0775)</code>. You also want to make sure that the XML
-files in <code>FRAPI_PATH/src/frapi/admin/application/config/app/</code> are
+files in <code>FRAPI_PATH/src/frapi/custom/Config</code> are
 readable and writable by the web-user, but only readable to everyone else
 <code>(0664)</code>.</p>
 
 <pre>
 chmod 775 FRAPI_PATH/src/frapi/custom/Action
 
-chmod 775 FRAPI_PATH/src/frapi/admin/application/config/app
-chmod 664 FRAPI_PATH/src/frapi/admin/application/config/app/*.xml
+chmod 775 FRAPI_PATH/src/frapi/custom/Config/
+chmod 664 FRAPI_PATH/src/frapi/custom/Config/*.xml
 </pre>
 
 <p>If you're using Linux you could run the <code>FRAPI_PATH/setup.sh</code> script. The <code>setup.sh</code> script will
