@@ -8,7 +8,7 @@
 
 <h1>Custom Templates</h1>
 
-<p>By default FRAPI generates XML and HTML (And other formats) on it’s own. However some vendors may require proprietary formats while serving XML.</p>
+<p>By default FRAPI generates XML and HTML (And other formats) on it's own. However some vendors may require proprietary formats while serving XML.</p>
 
 <p>For that purpose, FRAPI has a templating system and a custom templating system. This document will describe how to implement and use these templates.</p>
 
@@ -58,11 +58,13 @@ public function executeGet()
     }
 
     // Connect to our database
-    $db_instance = new PDO('mysql:dbname=databasename;host=localhost',
-                           'username', 'password');
+    $db = Frapi_Database::getInstance();
 
-    $stmt = $db_instance->prepare('SELECT sport_id, sport_name
-                                   FROM sport');
+    $stmt = $db->prepare('
+        SELECT sport_id, sport_name
+         FROM sport'
+    );
+    
     $stmt->execute();
 
     $sports_result = $stmt->fetchAll();
@@ -70,13 +72,13 @@ public function executeGet()
     // Create an array of data to use in our template file
     foreach($sports_result as $sport_data) {
         $this->data[] = array('sport' =>
-                            array('id' => $sport_data['sport_id'],
-                                  'name' => $sport_data['sport_name']
-                            )
-                        );
+            array('id' => $sport_data['sport_id'],
+                'name' => $sport_data['sport_name']
+            )
+        );
     }
 
-    $db_instance = null;
+    $db = null;
 
     return $this->toArray();
 }
