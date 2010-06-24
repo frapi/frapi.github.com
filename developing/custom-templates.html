@@ -1,0 +1,178 @@
+<script type="text/javascript" charset="utf-8" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/jquery.include.js"></script>
+<script src="/js/script.js"></script>
+
+<title>Custom Templates</title>
+
+<include src="/includes/header.html"></include>
+
+<h1>Custom Templates</h1>
+
+<p>By default FRAPI generates XML and HTML (And other formats) on it’s own. However some vendors may require proprietary formats while serving XML.</p>
+
+<p>For that purpose, FRAPI has a templating system and a custom templating system. This document will describe how to implement and use these templates.</p>
+
+<ul>
+    <li><a href="#frapi.custom.templates.creating.templates">Creating Templates</a>
+        <ul>
+            <li><a href="#frapi.custom.templates.creating.templates.file.location">File Location</a></li>
+            <li><a href="#frapi.custom.templates.creating.templates.file.contents">File Contents</a></li>
+            <li><a href="#frapi.custom.templates.creating.templates.example">Example</a></li>
+        </ul>
+    </li>
+    <li><a href="#frapi.custom.templates.creating.multiple.custom.templates">Creating Multiple Custom Templates</a></li>
+</ul>
+
+<h2 id="frapi.custom.templates.creating.templates">Creating Templates</h2>
+
+<h3 id="frapi.custom.templates.creating.templates.file.location">File Location</h3>
+
+<p>FRAPI actions by default will process a template file for xml or html if it exists at the following location:</p>
+
+<p><code>FRAPI_PATH/src/frapi/custom/Output/[xml or html]/ActionName.[xml or html].tpl</code>.</p>
+
+<p>Now that this file exists FRAPI will automatically start parsing it. You just have to add the code to make it look the way to you want.</p>
+
+<h3 id="frapi.custom.templates.creating.templates.file.contents">File Contents</h3>
+
+<p>A FRAPI template file can contain any html or xml you desire. You can use regular php code and syntax to process the data array you built in your action.</p>
+
+<p>To access the data array you built in the action from the template simply use the <code>$data</code> array.</p>
+
+<h3 id="frapi.custom.templates.creating.templates.example">Example</h3>
+
+<p>Let's create an action Sports and have the get for that action return, in xml, the id and name of all the sports in our database.</p>
+
+<p>Start by creating the action from the admin interface. To learn how to create actions, click <a href="creating-actions.html">here</a>.</p>
+
+<p>Start by modifying the <code>executeGet</code> function in the <code>FRAPI_PATH/src/frapi/custom/Action/Sports.php</code> to look like the following:</p>
+
+<p>
+    <code>
+    <pre>
+public function executeGet()
+{
+    $valid = $this->hasRequiredParameters($this->requiredParams);
+    if ($valid instanceof Frapi_Error) {
+        return $valid;
+    }
+
+    // Connect to our database
+    $db_instance = new PDO('mysql:dbname=databasename;host=localhost',
+                           'username', 'password');
+
+    $stmt = $db_instance->prepare('SELECT sport_id, sport_name
+                                   FROM sport');
+    $stmt->execute();
+
+    $sports_result = $stmt->fetchAll();
+
+    // Create an array of data to use in our template file
+    foreach($sports_result as $sport_data) {
+        $this->data[] = array('sport' =>
+                            array('id' => $sport_data['sport_id'],
+                                  'name' => $sport_data['sport_name']
+                            )
+                        );
+    }
+
+    $db_instance = null;
+
+    return $this->toArray();
+}
+    </pre>
+    </code>
+</p>
+
+<p>The code above connects to the database, queries the sport table for all sports, and then builds an array with that data. The array might look like:</p>
+<p>
+    <code>
+    <pre>
+Array
+(
+    [0] => Array
+        (
+            [sport] => Array
+                (
+                    [id] => 1
+                    [name] => Basketball
+                )
+
+        )
+
+    [1] => Array
+        (
+            [sport] => Array
+                (
+                    [id] => 2
+                    [name] => Football
+                )
+
+        )
+
+    [2] => Array
+        (
+            [sport] => Array
+                (
+                    [id] => 3
+                    [name] => Hockey
+                )
+
+        )
+
+)
+    </pre>
+    </code>
+</p>
+
+<p>Now that you have your data organized you can manipulate it in your <code>FRAPI_PATH/src/frapi/custom/Output/xml/Sports.xml.tpl</code> file<em>*</em>.</p>
+
+<p>Below is the content of the template file utilizing the <code>$data</code> variable which contains all the data you assigned to <code>$this->data</code> in the <code>executeGet()</code> function. Here you are simply looping through your array and building the xml structure you require.</p>
+
+<p>
+    <code>
+    <pre>
+&lt;sports&gt;
+    &lt;?php foreach ($data as $key => $value) : ?&gt;
+    &lt;sport&gt;
+        &lt;id&gt;&lt;?php echo $value['sport']['id']; ?&gt;&lt;/id&gt;
+        &lt;name&gt;&lt;?php echo $value['sport']['name']; ?&gt;&lt;/name&gt;
+    &lt;/sport&gt;
+    &lt;?php endforeach; ?&gt;
+&lt;/sports&gt;
+    </pre>
+    </code>
+</p>
+
+<p>Given the array you created in the action and the code in the template above the following xml will be created:</p>
+
+<p>
+    <code>
+    <pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;sports&gt;
+    &lt;sport&gt;
+        &lt;id&gt;1&lt;/id&gt;
+        &lt;name&gt;Basketball&lt;/name&gt;
+    &lt;/sport&gt;
+    &lt;sport&gt;
+        &lt;id&gt;2&lt;/id&gt;
+        &lt;name&gt;Football&lt;/name&gt;
+    &lt;/sport&gt;
+    &lt;sport&gt;
+        &lt;id&gt;3&lt;/id&gt;
+        &lt;name&gt;Hockey&lt;/name&gt;
+    &lt;/sport&gt;
+&lt;/sports&gt;
+    </pre>
+    </code>
+</p>
+
+<p>And that's all you need to know to create a custom xml or html template for your frapi action. If you need to represent the data from you action in multiple xml or html formats continue to the <a href="#frapi.custom.templates.creating.multiple.custom.templates">Creating Multiple Custom Templates</a> section below.</p>
+
+<p><em>*You may need to create this file if it does not already exist.</em></p>
+
+<h2 id="frapi.custom.templates.creating.multiple.custom.templates">Creating Multiple Custom Templates</h2>
+
+
+<include src="/includes/footer.html"></include>
