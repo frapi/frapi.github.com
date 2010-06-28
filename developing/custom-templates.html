@@ -64,7 +64,7 @@ public function executeGet()
         SELECT sport_id, sport_name
          FROM sport'
     );
-    
+
     $stmt->execute();
 
     $sports_result = $stmt->fetchAll();
@@ -175,6 +175,10 @@ Array
 <p><em>*You may need to create this file if it does not already exist.</em></p>
 
 <h2 id="frapi.custom.templates.creating.multiple.custom.templates">Creating Multiple Custom Templates</h2>
+
+<p>Let's say you want to represent the data created in your action in a slightly different way based on a parameter passed. FRAPI makes this very easy. All you have to do is create a template file in the following location: <code>FRAPI_PATH/src/frapi/custom/Output/[xml or html]/custom/CustomActionName.[xml or html].tpl</code>.</p>
+
+<p>Now all that is left is to specify the custom template you want to load. To do this simply call the <code>setTemplateFileName</code> method of your action object, passing it the name of your custom template. Like so <code>$this->setTemplateFileName('CustomActionName');</code>.</p>
 
 
 <include src="/includes/footer.html"></include>
