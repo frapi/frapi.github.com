@@ -187,12 +187,7 @@ in Apache with the following configuration:</p>
 &lt;VirtualHost *:80&gt;
     ServerName api.frapi
     ServerAdmin admin@api.frapi
-    DocumentRoot FRAPI_PATH/src/frapi/public
- 
-    RewriteEngine On
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule /([a-zA-Z]+)\.([a-z]+)? /index.php?action=$1&amp;format=$2 [QSA,L]
-    RewriteRule /([a-zA-Z]+)(\.*)? /index.php?action=$1 [QSA,L]
+    DocumentRoot FRAPI_PATH/src/frapi/public 
                   
     &lt;Directory FRAPI_PATH/src/frapi/public&gt;
         AllowOverride All
