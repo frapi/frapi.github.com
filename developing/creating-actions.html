@@ -14,7 +14,12 @@
 
 <ul>
     <li><a href="#frapi.creating.actions.accessing.admin.interface">Accessing the Admin Interface</a></li>
-    <li><a href="#frapi.creating.actions.using.admin.interface">Using the Admin Interface</a></li>
+    <li>
+        <a href="#frapi.creating.actions.using.admin.interface">Using the Admin Interface</a>
+        <ul>
+            <li><a href="#frapi.creating.actions.using.admin.interface.adding.parameters">Adding Parameters</a>
+        </ul>
+    </li>
     <li><a href="#frapi.creating.actions.generating.action.code">Generating the Action Code</a></li>
 </ul>
 
@@ -37,6 +42,36 @@
 <p>and as the arrow suggests, click on “Add new Action”.</p>
 
 <h3 id="frapi.creating.actions.using.admin.interface">Using the Admin Interface</h3>
+
+<p>The following screen will then be displayed, prompting you for the information necessary to create your own action.</p>
+
+<p><img src="/images/admin_add_action_screen.png" alt="frapi Add Action Screen" /></p>
+
+<p>The fields displayed on this screen are described below.</p>
+
+<p>
+    <ul>
+        <li><strong>Name</strong>: This is the name of the action you are creating (The file with code that will be generated with that name).</li>
+        <li><strong>Enabled</strong>: This indicates if the action you are creating should be enabled and available for someone to access.</li>
+        <li><strong>Public</strong>: This indicates if the action you are creating is publicly accessible. If you do not check this box then only partners will be able to access the action with a valid username and password.</li>
+        <li><strong>Custom Route</strong>: This is a very simple routing system. It allows you to modify the url of the action. Currently you can have a / delimited url. If you prefix part of the url with a : it will become a parameter for the action. For instance if the custom route for your action <code>/user/:user_id</code> and it was called like so: <code>http://api.frapi/user/2</code> then inside your action the <code>$user_id</code> variable would be 2.</li>
+        <li><strong>Description</strong>: This is the description of your action. Frapi has an API documentation generation system and when generating API documentation, it uses the description you put for the action to describe it. This generated documention can be used by third party developers that are using your API.</li>
+    </ul>
+</p>
+
+<h4 id="frapi.creating.actions.using.admin.interface.adding.parameters">Adding Parameters</h4>
+
+<p>Below the simple admin interface for adding actions you will notice the <strong>Add Parameter</strong> section.</p>
+
+<p><img src="/images/admin_add_action_add_parameters.png" alt="frapi Add Parameter" /></p>
+
+<p>To start adding parameters click on the <strong>Add Parameter</strong> link. This will display the parameter name field and well as a check box to indicate if the parameter is required.</p>
+
+<p><img src="/images/admin_add_action_add_parameter.png" alt="frapi Add Parameter" /></p>
+
+<p>This is used both in the code generation (automatic parameter verification in the API frontend) and in the generated API documentation. For each time you click <strong>Add Parameter</strong> a new set of fields will be added allowing you add as many parameters as you would like. An example use of parameters would be if you required a username and password for use with your own ACL.</p>
+
+<p>Once you are have completed editing your action and add parameters click <strong>Save</strong>. If all went well you should see a message that states "Action {NAME} Added"</p>
 
 <h3 id="frapi.creating.actions.generating.action.code">Generating the Action Code</h3>
 
