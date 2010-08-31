@@ -21,6 +21,7 @@
         </ul>
     </li>
     <li><a href="#frapi.creating.actions.generating.action.code">Generating the Action Code</a></li>
+    <li><a href="#frapi.creating.actions.example">Example</a></li>
 </ul>
 
 <h3 id="frapi.creating.actions.accessing.admin.interface">Accessing the Admin Interface</h3>
@@ -74,5 +75,50 @@
 <p>Once you are have completed editing your action and add parameters click <strong>Save</strong>. If all went well you should see a message that states "Action {NAME} Added"</p>
 
 <h3 id="frapi.creating.actions.generating.action.code">Generating the Action Code</h3>
-<p>N/A yet</p>
+
+<p>Now that the action is created, you need to synchronize the codebase (This means that Frapi will generate the skeleton code for your new actions). If you look at the top right of your administration interface you should see a "Sync Now" button.</p>
+
+<p><img src="/images/admin_generate_action_code.png" alt="frapi Generate Code" /></p>
+
+<p>When you click on that button Frapi grabs all the actions you created and generates the skeleton for the actions in the code base.</p>
+
+<p>When it's done synchronizing, you will get a message that says "Development environment has been sychronized" and if you go to your Frapi "custom" directory (Which is located in FRAPI_PATH/src/frapi/custom) you will see a folder called "Action" which will now contain the action you just created/synchronized.</p>
+
+<h3 id="frapi.creating.actions.example">Example</h3>
+
+<p>Now that you have learned how to create an action, let's get to the fun stuff and look at an example. This example will show you how to create two actions and the <a href="coding-actions.html">Coding Actions</a> section will teach you how to write the code.</p>
+
+<p>Firstly let's start with our database, below is SQL to create the table we will be manipulating in MySQL. Feel free to modify as necessary for your database of choice.</p>
+
+<p>
+    <code>
+        <pre>
+        CREATE TABLE `users` (
+          `user_id` int(11) NOT NULL AUTO_INCREMENT,
+          `username` varchar(100) DEFAULT NULL,
+          `password` varchar(40) DEFAULT NULL,
+          `first_name` varchar(100) DEFAULT NULL,
+          `last_name` varchar(100) DEFAULT NULL,
+          PRIMARY KEY (`user_id`)
+        );
+        </pre>
+    </code>
+</p>
+
+<p>Now we need to create two actions. One will be for handling the PUT action, the other for GET, POST, DELETE and HEAD. The reason this is necessary is that Frapi's routing system cannot handle a route that has an optional argument. Since the PUT action will not require a user id it needs to be created seperately.</p>
+
+<p>First up is our PUT action. Note the custom route does not contain a :user_id on the end. The : is how we define variables in our custom routes.</p>
+
+<p><img src="/images/admin_add_action_example1.png" alt="Add User action" /></p>
+
+<p>Once you have the above data entered, click "Save" to save your action.</p>
+
+<p>Next up is our action to handle GET, POST, DELETE and HEAD. Since all of these methods require a user id to function properly we add :user_id to the end of our custom route</p>
+
+<p><img src="/images/admin_add_action_example2.png" alt="Add User action" /></p>
+
+<p>Once you ahve the above data entered, click "Save" to save your action. Then "Sync Now" to have Frapi generate the skeleton code in your FRAPI_PATH/src/frapi/custom/Action directory.</p>
+
+<p>Now that your skeleton code has been created please proceed to the <a href="coding-actions.html">Coding Actions</a> section for details on how to code the actions you just created.</p>
+
 <include src="/includes/footer.html"></include>
