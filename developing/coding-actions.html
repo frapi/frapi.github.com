@@ -8,9 +8,159 @@
 
 <h1>Developing Actions</h1>
 <ul>
+    <li><a href="#frapi.coding.actions.class.structure">Class Structure</a></li>
     <li><a href="#frapi.coding.actions.accessing.parameters">Accessing Parameters</a></li>
     <li><a href="#frapi.coding.actions.returning.data">Returning Data</a></li>
 </ul>
+
+<h3 id="frapi.coding.actions.class.structure">Class Structure</h3>
+
+<p>If you have not already, please review the examples in the <a href="creating-actions.html#frapi.creating.actions.example">Creating Actions</a> section, as these code samples are based on those.
+
+<p>Below is the generated code from the "Users" action we created in the example. It can be found in the FRAPI_PATH/src/frapi/custom/Action/Users.php file.</p>
+
+<p>
+<pre>
+<code>
+&lt;?php
+/**
+ * Action Users 
+ * 
+ * This action handles a GET, POST, DELETE or HEAD request for a user
+ * 
+ * @link http://getfrapi.com
+ * @author Frapi <frapi@getfrapi.com>
+ * @link /users/:user_id
+ */
+class Action_Users extends Frapi_Action implements Frapi_Action_Interface
+{
+
+    /**
+     * Required parameters
+     * 
+     * @var An array of required parameters.
+     */
+    protected $requiredParams = array();
+
+    /**
+     * The data container to use in toArray()
+     * 
+     * @var A container of data to fill and return in toArray()
+     */
+    private $data = array();
+
+    /**
+     * To Array
+     * 
+     * This method returns the value found in the database 
+     * into an associative array.
+     * 
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this-&gt;data;
+    }
+
+    /**
+     * Default Call Method
+     * 
+     * This method is called when no specific request handler has been found
+     * 
+     * @return array
+     */
+    public function executeAction()
+    {
+        return $this-&gt;toArray();
+    }
+
+    /**
+     * Get Request Handler
+     * 
+     * This method is called when a request is a GET
+     * 
+     * @return array
+     */
+    public function executeGet()
+    {
+        return $this-&gt;toArray();
+    }
+
+    /**
+     * Post Request Handler
+     * 
+     * This method is called when a request is a POST
+     * 
+     * @return array
+     */
+    public function executePost()
+    {
+        return $this-&gt;toArray();
+    }
+
+    /**
+     * Put Request Handler
+     * 
+     * This method is called when a request is a PUT
+     * 
+     * @return array
+     */
+    public function executePut()
+    {
+        return $this-&gt;toArray();
+    }
+
+    /**
+     * Delete Request Handler
+     * 
+     * This method is called when a request is a DELETE
+     * 
+     * @return array
+     */
+    public function executeDelete()
+    {
+        return $this-&gt;toArray();
+    }
+
+    /**
+     * Head Request Handler
+     * 
+     * This method is called when a request is a HEAD
+     * 
+     * @return array
+     */
+    public function executeHead()
+    {
+        return $this-&gt;toArray();
+    }
+
+
+}
+</code>
+</pre>
+</p>
+
+<p>Lets look at each part of the class now.</p>
+
+<p><code>class Action_Users extends Frapi_Action implements Frapi_Action_Interface</code></p>
+
+<p>All Frapi actions extend Frapi_Action class and implement the Frapi_Action_Interface.</p>
+
+<p><code>protected $requiredParams = array();</code></p>
+
+<p>The <code>$requiredParams</code> property of the class stores all the parameters defined as required in the admin interface. If there are any here Frapi will automatically enforce that they are passed and return the appropriate error code if not.</p>
+
+<p><code>private $data = array();</code></p>
+
+<p>The <code>$data</code> property of the class stores the data that will be returned from your action. Typically you build this up in your <code>execute*</code> methods.</p>
+
+<p><code>public function toArray() {</code></p>
+
+<p>The <code>toArray()</code> method simply returns the <code>$data</code> property of the class.</p>
+
+<p><code>execute[Action|Get|Post|Put|Delete|Head]</code></p>
+
+<p>These methods handle the appropriate request for this action. For example a GET request to /users/1 will be handled by the executeGet() method.</p>
 
 <h3 id="frapi.coding.actions.accessing.parameters">Accessing Parameters</h3>
 
