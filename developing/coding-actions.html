@@ -133,8 +133,6 @@ class Action_Users extends Frapi_Action implements Frapi_Action_Interface
     {
         return $this-&gt;toArray();
     }
-
-
 }
 </code>
 </pre>
@@ -163,7 +161,118 @@ class Action_Users extends Frapi_Action implements Frapi_Action_Interface
 <p>These methods handle the appropriate request for this action. For example a GET request to /users/1 will be handled by the executeGet() method.</p>
 
 <h3 id="frapi.coding.actions.accessing.parameters">Accessing Parameters</h3>
+<p>For debugging purposes, FRAPI allows developers to retrieve all query parameters using the method <code>$this-&gt;getParams();</code> from within any execute*() action. This method returns an associative array of parameter names and values &mdash; <i>$_REQUEST</i>.</p>
 
+<p>As developers have a tendency to break things and not read documentation, at times, the data sent to your api API is not going to be of good type. FRAPI has another method to help you retrieve single parameters called. The <code>$this-&gt;getParam(key [, type]);</code> method .</p>
+
+<p>The first argument is <strong>required</strong> and is the <i>key</i> of the parameter to retrieve. The second argument is <strong>optional</strong> and is the <strong>type</strong> to cast the parameter to.</p>
+
+<p>Here's a code example for retrieving <i>$_GET['name']</i> in different types:</p>
+
+<p><pre><code>
+&lt;php
+class ActionX ... {
+    public function executeGet() 
+    {
+        // Fetch $_GET['name'] as is.
+        $nameNoCast   = $this->getParam('name');
+        
+        // Fetch the $_GET['name'] as a string.
+        $nameAsString = $this->getParam('name', self::TYPE_STRING);
+        
+        // Fetch the $_GET['name'] as an 
+        // htmlspecialentities/htmlspecialchars string.
+        $nameAsHtmlEscaped = $this->getParam('name'; self::TYPE_OUTPUT);
+        
+        // Fetch the $_GET['name'] as an int
+        $nameAsInteger = $this->getParam('name', self::TYPE_INT);
+    }
+    
+    public function executePost()
+    {
+        // Fetch the $_POST['age'] param as float
+        $ageAsFloat = $this->getParam('age', self::TYPE_FLOAT);
+    }
+    
+    public function executeDelete()
+    {
+        // Consider a batch delete
+        // Fetch the $_REQUEST['users'] which is 
+        // users[]=1&users[]=2&users=3 as an array.
+        $users = $this->getParam('users', self::TYPE_ARRAY);
+        foreach ($users as $key => $user) {
+            echo $user;
+        }
+    }
+}
+</code></pre></p>
+
+<p>As you can see above, the <i>$this-&gt;getParam()</i> method is not bound to a specific method type. Moreover, as noted above, there are many different types that parameters can be casted as &mdash; <i>that's the second parameter</i>
+    <ul>
+        <li>Integer: <i>self::TYPE_INT</i>, <i>self::TYPE_INTEGER</i>, <i>self::TYPE_LONG</i></li>
+        <li>Double: <i>self::TYPE_DOUBLE</i></li>
+        <li>Float: <i>self::TYPE_FLOAT</i></li>
+        <li>Boolean: <i>self::TYPE_BOOLEAN</i></li>
+        <li>String: <i>self::TYPE_STRING</i></li>
+        <li>Array: <i>self::TYPE_ARRAY</i></li>
+        <li>Safe Output (htmlentities): <i>self::TYPE_OUTPUT</i></li>
+        <li>File: <i>self::TYPE_FILE</i></li>
+    </ul>
+</p>
+
+<p>Obviously you don't <strong>have</strong> to use type casting, however it can greatly improve the security of the API and improve your ability to recognize bad behaviours.</p>
+    
 <h3 id="frapi.coding.actions.returning.data">Returning Data</h3>
+<p>When you are in an <code>execute*()</code> method, at any given time you can exit and return data to the third party developers by invoking:</p>
+<p><code>$this-&gt;toArray();</code></p>
 
+<p>The <code>$this-&gt;toArray();</code> method is quite benign; it simply takes what's present in the <code>$this-&gt;data</code> parent property and handles it's output type &mdash; json, xml, php, printr, jsonp, etc.</p>
+
+<p>To return data to your JSON output handler &mdash; or automatically any other handler for that matter &mdash; simply populate the <code>$this-&gt;data</code> from within your action and when you are finished, <code>return $this-&gt;toArray();</code></p>
+
+<p>Here's a use-case for a GET, a HEAD, and a DELETE request:</p>
+<p><pre><code>
+&lt;php
+/**
+ * Route: /x
+ */
+class ActionX ... {
+    public function executeGet() 
+    {
+        $this->data['meta']    = array(
+            'total' => 1, 'when', 'now'
+        );
+        
+        $this->data['content'] = array(
+            'users' => array('name' => 'david')
+        );
+        
+        return $this->toArray();
+    }
+
+    public function executeHead()
+    {
+        $this->data['meta']    = array(
+            'total' => 1, 'when', 'now'
+        );
+        
+        return $this->toArray();
+    }
+
+    public function executeDelete()
+    {
+        $this->data['success'] = 1;
+        return $this->toArray();
+    }
+}
+</code></pre></p>
+
+<p>If you execute <span id="command">curl -X GET -d {} http://api/x.json</span> the output will be: </p>
+<p><code>{"meta": {"total":1,"when":"now"}, "content": {"users": {"name":"david"}}}</code></p>
+
+<p>For a <span id="command">curl -X DELETE -d {} http://api/x.json</span>, the output will be: </p>
+<p><code>{"success":1}</code></p>
+
+<p>For a <span id="command">curl -X HEAD -d {} http://api/x.json</span>, the output will be:</p>
+<p><code>{"meta": {"total":1, "when": "now"}}</code></p>
 <include src="/includes/footer.html"></include>
