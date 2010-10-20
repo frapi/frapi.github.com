@@ -275,4 +275,99 @@ class ActionX ... {
 
 <p>For a <span id="command">curl -X HEAD -d {} http://api/x.json</span>, the output will be:</p>
 <p><code>{"meta": {"total":1, "when": "now"}}</code></p>
+
+<h3 id="frapi.coding.actions.returning.custom">Returning Custom Response</h3>
+<p>FRAPI always returns a 200 by default when an action is successful. However, it might happen that you want to return say 201 when you've handled a POST correctly and a new resource has been created. In such case, from within an <code>execute*()</code> method, a developer can return a new <code>Frapi_Response</code> object.</p>
+<p>The required parameters of a <code>Frapi_Response</code> are quite simple. It is an array. <strong>Beward</strong> this array currently contains 2 elements that will be useful to you. a <em>code</em> key, and a <em>data</em> key.</p>
+
+<p>Whenever you are in an action and you want to finish an action, return 201 and some array data &mdash; <em>as if you were populating $this-&gt;data</em>&mdash; you would do this:</p>
+<p><pre><code>
+    public function executePost()
+    {
+        return new Frapi_Response(array(
+            'code' => 201,
+            'data' => array('success' => 1)
+        ));
+    }
+    
+</code></pre></p>
+
+<p>This will return the exact same thing than if you had done:</p>
+<p><pre><code>
+    public function executePost()
+    {
+        $this->data = array('success' => 1);
+        return $this->toArray();
+    }
+    
+</code></pre></p>
+
+<p>But instead of HTTP Response Code 200, the response code will be 201 (Created).</p>
+
+<h3 id="frapi.coding.actions.returning.errors">Returning 4xx Errors</h3>
+<p>As you may have seen in <a href="/developing/creating-errors.html" title="Creating Errors with FRAPI">creating errors</a> FRAPI allows you to manage errors from the administration interface. Once you created an error in FRAPI with an HTTP Response Code, you can easily invoke this error at anytime, in any action method by invoking the error by the created name like such:</p>
+
+<p><pre><code>
+    // Name of error in frapi admin "NAME_OF_ERROR"
+    throw new Frapi_Error('NAME_OF_ERROR');
+    
+</code></pre></p>
+
+<p>By doing this in any <code>execute*()</code> method, you are going to throw an error with the associated name, description and message. If the requested output is XML, the error will look like:</p>
+
+<p><pre><code>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;response&gt;
+    &lt;errors&gt;	
+        &lt;error code=&quot;NAME_OF_ERROR&quot;&gt;
+            &lt;message&gt;Description of error&lt;/message&gt;
+            &lt;name&gt;NAME_OF_ERROR&lt;/name&gt;
+            &lt;at&gt;&lt;/at&gt;
+        &lt;/error&gt;
+    &lt;/errors&gt;
+&lt;/response&gt;
+
+</code></pre></p>
+
+<p>The most important part from throwing Frapi_Errors is that the <em>HTTP Code</em> is going to be thrown correctly as well.</p>
+
+<p>For developers, it is also important to know that errors can be thrown at anytime without prior definition of the error code in the administration panel. In order to throw a 404 error about a resource that's not been found, a developer would do:</p>
+
+<p><pre><code>
+    // Name of error in frapi admin "NAME_OF_ERROR"
+    throw new Frapi_Error('NOT_FOUND', 'This user was not found', 404);
+    
+</code></pre></p>
+
+<p>If you look closely at the previous code example, you'd notice that we are invoking the <code>Frapi_Error</code> just as if we were using the errors defined in the administration panel but this is an on-the-fly error. What happens within FRAPI is that when <code>Frapi_Error</code> is invoked, it verifies if the first parameter exists in the cache of <em>Administration defined errors</em> and if it doesn't match anything, it creates a dynamic error. </p>
+
+<p>With dynamic errors, there are 2 <strong>required parameters</strong> and the third is optional but probably the most important of all. The <strong>first parameter</strong> is the error name/code in the payload returned to the users. The <strong>second parameter</strong> is the description of the error or the <em>message</em> part of the payload. The <strong>third parameter</strong> is optional but the most important for RESTful APIs. It's the <em>HTTP Code</em> to return with the error. If nothing is passed as the third parameter, the <strong>default HTTP Response Code</strong> returned is 400. For instance, the <code>throw new Frapi_Error('NOT_FOUND', 'This user was not found', 404)</code> code snippet above, would generate the following XML with the HTTP Response Code 404:</p>
+    
+<p><pre><code>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;response&gt;
+    &lt;errors&gt;	
+        &lt;error code=&quot;NOT_FOUND&quot;&gt;
+            &lt;message&gt;This user was not found&lt;/message&gt;
+            &lt;name&gt;NOT_FOUND&lt;/name&gt;
+            &lt;at&gt;&lt;/at&gt;
+        &lt;/error&gt;
+    &lt;/errors&gt;
+&lt;/response&gt;
+
+</code></pre></p>
+
+<p>The JSON output for such error would look like:</p>
+<p><pre><code>
+{
+    "errors":[{
+        "message":"This user was not found",
+        "name":"NOT_FOUND",
+        "at":""
+    }]
+}
+</code></pre></p>
+
+<p>We strongly recommend using the administration interface to define the errors as this is currently the only way to generate documentation using the automated documentation generator in FRAPI. We are currently working on a reverse-engineering solution that will scan all your custom <em>Action</em> code and identify the dynamic errors defined in-code and not in-admin and generate documentation for those errors but for now this functionality is lacking.</p>
+
 <include src="/includes/footer.html"></include>
