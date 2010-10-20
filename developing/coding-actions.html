@@ -11,6 +11,9 @@
     <li><a href="#frapi.coding.actions.class.structure">Class Structure</a></li>
     <li><a href="#frapi.coding.actions.accessing.parameters">Accessing Parameters</a></li>
     <li><a href="#frapi.coding.actions.returning.data">Returning Data</a></li>
+    <li><a href="#frapi.coding.actions.returning.custom">Returning Custom Responses</a></li>
+    <li><a href="#frapi.coding.actions.returning.errors">Returning 4xx Errors</a></li>
+
 </ul>
 
 <h3 id="frapi.coding.actions.class.structure">Class Structure</h3>
@@ -276,11 +279,13 @@ class ActionX ... {
 <p>For a <span id="command">curl -X HEAD -d {} http://api/x.json</span>, the output will be:</p>
 <p><code>{"meta": {"total":1, "when": "now"}}</code></p>
 
-<h3 id="frapi.coding.actions.returning.custom">Returning Custom Response</h3>
-<p>FRAPI always returns a 200 by default when an action is successful. However, it might happen that you want to return say 201 when you've handled a POST correctly and a new resource has been created. In such case, from within an <code>execute*()</code> method, a developer can return a new <code>Frapi_Response</code> object.</p>
-<p>The required parameters of a <code>Frapi_Response</code> are quite simple. It is an array. <strong>Beward</strong> this array currently contains 2 elements that will be useful to you. a <em>code</em> key, and a <em>data</em> key.</p>
+<h3 id="frapi.coding.actions.returning.custom">Returning Custom Responses</h3>
+<p>FRAPI always returns a 200 <em>HTTP Response Code</em> by default when an action is successful. However, it might happen that you want to return a 201 <em>HTTP Response Code</em> after having handled a POST correctly and after having created a resource. </p>
 
-<p>Whenever you are in an action and you want to finish an action, return 201 and some array data &mdash; <em>as if you were populating $this-&gt;data</em>&mdash; you would do this:</p>
+<p>In such case, from within an <code>execute*()</code> method, a developer can return a new <code>Frapi_Response</code> object.</p>
+<p>The required parameters of a <code>Frapi_Response</code> are quite simple. It is an array. <strong>Beware</strong> this array currently contains 2 elements that will be useful to you. a <em>code</em> key, and a <em>data</em> key. The <strong>code</strong> key is the <em>HTTP Response Code</em> to return, and the <strong>data</strong> key is the data to return in the response body.</p>
+
+<p>If you were in an action and you wanted to indicate that a resource had been created by returning a 201 <em>HTTP Response Code</em> and some array data &mdash; <em>as if you were populating $this-&gt;data</em>&mdash; you would do this:</p>
 <p><pre><code>
     public function executePost()
     {
