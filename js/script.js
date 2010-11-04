@@ -25,5 +25,6 @@ $(document).ready(function() {
         _gat._getTracker("UA-XXXXX-Y")._trackPageview();
     } catch (error) {
         // uh oh, better have a debug console handy
+        consol.log(error);
     }
 });
