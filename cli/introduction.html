@@ -1,0 +1,57 @@
+<script type="text/javascript" charset="utf-8" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/jquery.include.js"></script>
+<script src="/js/script.js"></script>
+
+<title>CLI Introduction</title>
+
+<include src="/includes/header.html"></include>
+
+<h1>CLI Introduction</h1>
+<ul>
+    <li><a href="#frapi.cli.introduction.introduction">Introduction</a></li>
+    <li><a href="#frapi.cli.introduction.location">Location</a></li>
+    <li><a href="#frapi.cli.introduction.arguments">Arguments</a></li>
+    <li><a href="#frapi.cli.introduction.options">Options</a></li>
+    <li><a href="#frapi.cli.introduction.module.details">Module Details</a></li>
+</ul>
+
+<h3 id="frapi.cli.introduction.introduction">Introduction</a></h3>
+
+<p>So you'd prefer to use the CLI to a web based interface for managing your FRAPI install? Well, you've come to the right place. The FRAPI CLI offers most of the functionality of the web based administrative interface.</p>
+
+<h3 id="frapi.cli.introduction.location">Location</h3>
+
+<p>The frapi CLI file is in the following directory: FRAPI_PATH/src/frapi/admin/console. It can be run by simply changing to the console directory and typing <code>./frapi.php</code> which if called without any arguments or options will display a usage message.</p>
+
+<h3 id="frapi.cli.introduction.arguments">Arguments</h3>
+
+<p>There are two required arguments for the FRAPI CLI. The first is the action you would like to take, for example - add, delete, etc. The second is the module you would to perform that action on, for example - action, partner, etc. To get the options for each combination of action and module you can pass them to the <code>frapi.php</code>. Please see the <a href="#frapi.cli.introduction.module.details">Module Details</a> section for a complete list and description of the arguments and options available.</p>
+
+<h3 id="frapi.cli.introduction.options">Options</h3>
+
+<p>For each combition of action and module there are different options that may or may not be required. To get a list of the options available for a combination of action and module call the CLI script with those arguments and a usage message will be displayed. To get a complete list of options for all action/module combinations please see the <a href="#frapi.cli.introduction.module.details">Module Details</a> section. Below is the example output when attempting to add an action with no options.</p>
+
+<p>
+<pre>
+<code>
+$./frapi.php add action
+Usage: ./frapi.php [ options ]
+--name|-n <string>                  Name of the action.
+--enabled|-e                Is the action enabled?
+--public|-p                 Is the action public?
+--route|-r <string>                 Custom route of the action.
+--description|-d <string>           Description of the action.
+--parameters|--pa <string>          List of comma-seperated optional parameters.
+--required-parameters|--rp <string> List of comma-seperated required parameters.
+</code>
+</pre>
+</p>
+
+<h3 id="frapi.clie.introduction.module.details">Module Details</h3>
+<p>Below are links to pages with detailed information about each module and what actions and options are available.</p>
+<ul>
+    <li><a href="actions.html">Actions</a></li>
+    <li><a href="errors.html">Errors</a></li>
+    <li><a href="partners.html">Partners</a></li>
+</ul>
+<include src="/includes/footer.html"></include>
