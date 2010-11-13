@@ -8,4 +8,101 @@
 
 <h1>CLI Actions</h1>
 
+<p>Here we will give you the information you need work with actions in the FRAPI CLI. Below are a list of valid arguments along with the options they accept and an example of each.</p>
+
+<ul>
+    <li><a href="#frapi.cli.actions.add.action">add action</a></li>
+    <li><a href="#frapi.cli.actions.delete.action">delete action</a></li>
+    <li><a href="#frapi.cli.actions.list.actions">list actions</a></li>
+    <li><a href="#frapi.cli.actions.sync.actions">sync actions</a></li>
+</ul>
+
+<h3 id="frapi.cli.actions.add.action">add action</h3>
+
+<p>Add a new action to the system.</p>
+
+<p>Example: <code>$ ./frapi.php add action --name=Test1 --enabled --public --route="/test1/:var" --description="This is a test." --parameters="param1,param2" --required-parameters="param3"</code></p>
+
+<table width="100%">
+    <thead>
+        <tr>
+            <th>Option</th>
+            <th>Required</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>--name|-n</td>
+            <td>Yes</td>
+            <td>The name of the action to create.</td>
+        </tr>
+        <tr>
+            <td>--enabled|-e</td>
+            <td>No</td>
+            <td>Pass this option when the action being created is enabled.</td>
+        </tr>
+        <tr>
+            <td>--public|-p</td>
+            <td>No</td>
+            <td>Pass this option when the action being created is public (accessible without a username or password).</td>
+        </tr>
+        <tr>
+            <td>--route|-r</td>
+            <td>Yes</td>
+            <td>The route of the action to create</td>
+        </tr>
+        <tr>
+            <td>--description|-d</td>
+            <td>No</td>
+            <td>The description of the action being created.</td>
+        </tr>
+        <tr>
+            <td>--parameters|--pa</td>
+            <td>No</td>
+            <td>List of comma seperated optional parameters for the action being created.</td>
+        </tr>
+        <tr>
+            <td>--required-parameters|-rp</td>
+            <td>No</td>
+            <td>List of comma seperated required parameters for the action being created.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="frapi.cli.actions.delete.action">delete action</h3>
+
+<p>Delete an action from the system.</p>
+
+<p>Example: <code>$ ./frapi.php delete action --name=Test1</code></p>
+
+<table width="100%">
+    <thead>
+        <tr>
+            <th>Option</th>
+            <th>Required</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>--name|-n</td>
+            <td>Yes</td>
+            <td>Name of the action to delete.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="frapi.cli.actions.list.actions">list actions</h3>
+
+<p>List all the actions in the system and their details.</p>
+
+<p>Example: <code>$ ./frapi.php list actions</code></p>
+
+<h3 id="frapi.cli.actions.sync.actions">sync actions</h3>
+
+<p>Sync the defined actions with the code base. Creating new files for actions as necessary.</p>
+
+<p>Example: <code>$ ./frapi.php sync actions</code></p>
+
 <include src="/includes/footer.html"></include>
