@@ -8,4 +8,79 @@
 
 <h1>CLI Partners</h1>
 
+<p>Here we will give you the information you need to work with partners in the FRAPI CLI. Below are a list of valid arguments along with the options they accept and an example of each.</p>
+
+<ul>
+    <li><a href="#frapi.cli.partners.add.partner">add partner</a></li>
+    <li><a href="#frapi.cli.partners.delete.partner">delete partner</a></li>
+    <li><a href="#frapi.cli.partners.list.partners">list partners</a></li>
+</ul>
+
+<h3 id="frapi.cli.partners.add.partner">add partner</h3>
+
+<p>Add a new partner to the system.</p>
+
+<p>Example: <code>$ ./frapi.php add partner --first-name=Jane --last-name=Doe --email="jane.doe@gmail.com" --company=frapi</code></p>
+
+<table width="100%">
+    <thead>
+        <tr>
+            <th>Option</th>
+            <th>Required</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>--first-name|-fn</td>
+            <td>Yes</td>
+            <td>The first name of the partner being created.</td>
+        </tr>
+        <tr>
+            <td>--last-name|-ln</td>
+            <td>Yes</td>
+            <td>The last name of the partner being created.</td>
+        </tr>
+        <tr>
+            <td>--email|-e</td>
+            <td>Yes</td>
+            <td>Email address/username of partner being created.</td>
+        </tr>
+        <tr>
+            <td>--company|-c</td>
+            <td>Yes</td>
+            <td>Company name of partner being created.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="frapi.cli.partners.delete.partner">delete partner</h3>
+
+<p>Delete a partner from the system.</p>
+
+<p>Example: <code>$ ./frapi.php delete partner --email="jane.doe@gmail.com"</code</p>
+
+<table width="100%">
+    <thead>
+        <tr>
+            <th>Option</th>
+            <th>Required</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>--email|-e</td>
+            <td>Yes</td>
+            <td>Email address/username of partner to delete.<td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="frapi.cli.partners.list.partners">list partners</h3>
+
+<p>List all the partners in the system and their details.</p>
+
+<p>Example: <code>$ ./frapi.php list partners</code></p>
+
 <include src="/includes/footer.html"></include>
