@@ -5,7 +5,87 @@
 <title>CLI Errors</title>
 
 <include src="/includes/header.html"></include>
+<style type="text/css">
+table tr th {
+    text-align: left;
+}
+</style>
 
 <h1>CLI Errors</h1>
+
+<p>Here we will give you the information you need to work with errors in the FRAPI CLI. Below are a list of valid arguments along with the options they accept and an example of each.</p>
+
+<ul>
+    <li><a href="#frapi.cli.errors.add.error">add error</a></li>
+    <li><a href="#frapi.cli.errors.delete.error">delete error</a></li>
+    <li><a href="#frapi.cli.errors.list.errors">list errors</a></li>
+</ul>
+
+<h3 id="frapi.cli.errors.add.error">add error</h3>
+
+<p>Add a new error to the system.</p>
+
+<p>Example: <code>$ ./frapi.php add error --name=ERROR1 --code=412 --message="There was an error processing your request." --description="This is a test error."</code></p>
+
+<table width="100%">
+    <thead>
+        <tr>
+            <th>Option</th>
+            <th>Required</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>--name|-n</td>
+            <td>Yes</td>
+            <td>The name of the error being created.</td>
+        </tr>
+        <tr>
+            <td>--code|-c</td>
+            <td>No</td>
+            <td>The http code of the error being created.</td>
+        </tr>
+        <tr>
+            <td>--message|-m</td>
+            <td>Yes</td>
+            <td>The meesage of the error being created.</td>
+        </tr>
+        <tr>
+            <td>--description|-d</td>
+            <td>No</td>
+            <td>Description of error being created, used for documentation.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="frapi.cli.errors.delete.error">delete error</h3>
+
+<p>Delete an error from the system.</p>
+
+<p>Example: <code>$ ./frapi.php delete error --name="ERROR1"</code></p>
+
+<table width="100%">
+    <thead>
+        <tr>
+            <th>Option</th>
+            <th>Required</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>--name|-n</td>
+            <td>Yes</td>
+            <td>Name of error to delete.<td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="frapi.cli.errors.list.errors">list errors</h3>
+
+<p>List all the errors in the system and their details.</p>
+
+<p>Example: <code>$ ./frapi.php list errors</code></p>
 
 <include src="/includes/footer.html"></include>
