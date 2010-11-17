@@ -72,7 +72,7 @@ PHP scripts correctly.</p>
 
 <h3 id="frapi.installing.requirements.and.dependencies.redis">Redis</h3>
 <ul>
-    <li><a href="http://github.com/owlient/phpredis">PHP Redis</a>: In the event where one would like to use the Redis cache adapter, one would need to install phpredis which is the extension that the FRAPI cache adapter uses to interact with Redis.</li>
+    <li><em>(Not required by default)</em> <a href="http://github.com/owlient/phpredis">PHP Redis</a>: FRAPI uses APC as the default caching mechanism, therefore, the phpredis extension <em>is not</em> required in FRAPI by default. However, ff your favourite caching mechanism is Redis and you want to use it with FRAPI and exploit the built-in caching benefits, the phpredis library is required.</li>
 </ul>
     
 <h3 id="frapi.installing.requirements.and.dependencies.unit.tests">Unit Tests</h3>
