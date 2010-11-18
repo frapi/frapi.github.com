@@ -165,6 +165,9 @@ host with the following configuration:</p>
     DirectoryIndex index.php
     ServerAdmin admin@api.frapi
 
+    # This should be omitted in the production environment
+    SetEnv APPLICATION_ENV development
+
     DocumentRoot FRAPI_PATH/src/frapi/admin/public
     &lt;Directory FRAPI_PATH/src/frapi/admin/public&gt;
         AllowOverride All
@@ -195,6 +198,9 @@ in Apache with the following configuration:</p>
     ServerName api.frapi
     ServerAdmin admin@api.frapi
     DocumentRoot FRAPI_PATH/src/frapi/public 
+
+    # This should be omitted in the production environment
+    SetEnv APPLICATION_ENV development
                   
     &lt;Directory FRAPI_PATH/src/frapi/public&gt;
         AllowOverride All
