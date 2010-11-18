@@ -8,7 +8,7 @@
 
 <h1>Creating Actions</h1>
 
-<p>Now that you successfully setup Frapi (Both the admin and the frontend side) you must create your first action. As the <a href="/installing/index.html#frapi.installing.configuring.apache">Running on nginx</a> and the <a href="/installing/index.html#frapi.installing.configuring.apache">Running on Apache</a> pages refer to the administration interface url as <a href="http://admin.frapi">http://admin.frapi</a>, we'll use that URL in this example.</a></p>
+<p>Now that you successfully setup FRAPI (Both the admin and the frontend side) you must create your first action. As the <a href="/installing/index.html#frapi.installing.configuring.apache">Running on nginx</a> and the <a href="/installing/index.html#frapi.installing.configuring.apache">Running on Apache</a> pages refer to the administration interface url as <a href="http://admin.frapi">http://admin.frapi</a>, we'll use that URL in this example.</a></p>
 
 <p>This document will walk you through creating your first action</p>
 
@@ -26,19 +26,17 @@
 
 <h3 id="frapi.creating.actions.accessing.admin.interface">Accessing the Admin Interface</h3>
 
-<p>Now that you successfully setup Frapi (Both the admin and the frontend side) you must create your first action. As the <a href="/installing/index.html#frapi.installing.configuring.nginx">Configuring Nginx</a> and the <a href="/installing/index.html#frapi.installing.configuring.apache">Configuring Apache</a> sections refer to the administration interface url as http://admin.frapi, we'll use that URL in this example.
-
 <p>Firstly you must go to the admin interface and login. The default username is: <em>admin</em> and default password is: <em>password</em>.<p> 
 
-<p><img src="/images/admin_login.png" alt="frapi Admin Login" /></p>
+<p><img src="/images/admin_login.png" alt="FRAPI Admin Login" /></p>
 
 <p>Once this is done click on &quot;Actions&quot;</p>
 
-<p><img src="/images/admin_actions.png" alt="frapi Admin Actions" /></p>
+<p><img src="/images/admin_actions.png" alt="FRAPI Admin Actions" /></p>
 
 <p>and you will be directed to this screen</p>
 
-<p><img src="/images/admin_add_action.png" alt="frapi Add Action" /></p>
+<p><img src="/images/admin_add_action.png" alt="FRAPI Add Action" /></p>
 
 <p>and as the arrow suggests, click on &quot;Add new Action&quot;.</p>
 
@@ -46,7 +44,7 @@
 
 <p>The following screen will then be displayed, prompting you for the information necessary to create your own action.</p>
 
-<p><img src="/images/admin_add_action_screen.png" alt="frapi Add Action Screen" /></p>
+<p><img src="/images/admin_add_action_screen.png" alt="FRAPI Add Action Screen" /></p>
 
 <p>The fields displayed on this screen are described below.</p>
 
@@ -56,7 +54,7 @@
         <li><strong>Enabled</strong>: This indicates if the action you are creating should be enabled and available for someone to access.</li>
         <li><strong>Public</strong>: This indicates if the action you are creating is publicly accessible. If you do not check this box then only partners will be able to access the action with a valid username and password.</li>
         <li><strong>Custom Route</strong>: This is a very simple routing system. It allows you to modify the url of the action. Currently you can have a / delimited url. If you prefix part of the url with a : it will become a parameter for the action. For instance if the custom route for your action <code>/user/:user_id</code> and it was called like so: <code>http://api.frapi/user/2</code> then inside your action the <code>$user_id</code> variable would be 2.</li>
-        <li><strong>Description</strong>: This is the description of your action. Frapi has an API documentation generation system and when generating API documentation, it uses the description you put for the action to describe it. This generated documention can be used by third party developers that are using your API.</li>
+        <li><strong>Description</strong>: This is the description of your action. FRAPI has an API documentation generation system and when generating API documentation, it uses the description you put for the action to describe it. This generated documention can be used by third party developers that are using your API.</li>
     </ul>
 </p>
 
@@ -64,11 +62,11 @@
 
 <p>Below the simple admin interface for adding actions you will notice the <strong>Add Parameter</strong> section.</p>
 
-<p><img src="/images/admin_add_action_add_parameters.png" alt="frapi Add Parameter" /></p>
+<p><img src="/images/admin_add_action_add_parameters.png" alt="FRAPI Add Parameter" /></p>
 
 <p>To start adding parameters click on the <strong>Add Parameter</strong> link. This will display the parameter name field and well as a check box to indicate if the parameter is required.</p>
 
-<p><img src="/images/admin_add_action_add_parameter.png" alt="frapi Add Parameter" /></p>
+<p><img src="/images/admin_add_action_add_parameter.png" alt="FRAPI Add Parameter" /></p>
 
 <p>This is used both in the code generation (automatic parameter verification in the API frontend) and in the generated API documentation. For each time you click <strong>Add Parameter</strong> a new set of fields will be added allowing you add as many parameters as you would like. An example use of parameters would be if you required a username and password for use with your own ACL.</p>
 
@@ -76,13 +74,13 @@
 
 <h3 id="frapi.creating.actions.generating.action.code">Generating the Action Code</h3>
 
-<p>Now that the action is created, you need to synchronize the codebase (This means that Frapi will generate the skeleton code for your new actions). If you look at the top right of your administration interface you should see a "Sync Now" button.</p>
+<p>Now that the action is created, you need to synchronize the codebase (This means that FRAPI will generate the skeleton code for your new actions). If you look at the top right of your administration interface you should see a "Sync Now" button.</p>
 
-<p><img src="/images/admin_generate_action_code.png" alt="frapi Generate Code" /></p>
+<p><img src="/images/admin_generate_action_code.png" alt="FRAPI Generate Code" /></p>
 
-<p>When you click on that button Frapi grabs all the actions you created and generates the skeleton for the actions in the code base.</p>
+<p>When you click on that button FRAPI grabs all the actions you created and generates the skeleton for the actions in the code base.</p>
 
-<p>When it's done synchronizing, you will get a message that says "Development environment has been sychronized" and if you go to your Frapi "custom" directory (Which is located in FRAPI_PATH/src/frapi/custom) you will see a folder called "Action" which will now contain the action you just created/synchronized.</p>
+<p>When it's done synchronizing, you will get a message that says "Development environment has been sychronized" and if you go to your FRAPI "custom" directory (Which is located in FRAPI_PATH/src/frapi/custom) you will see a folder called "Action" which will now contain the action you just created/synchronized.</p>
 
 <h3 id="frapi.creating.actions.example">Example</h3>
 
@@ -105,7 +103,7 @@
     </code>
 </p>
 
-<p>Now we need to create two actions. One will be for handling the PUT action, the other for GET, POST, DELETE and HEAD. The reason this is necessary is that Frapi's routing system cannot handle a route that has an optional argument. Since the PUT action will not require a user id it needs to be created seperately.</p>
+<p>Now we need to create two actions. One will be for handling the PUT action, the other for GET, POST, DELETE and HEAD. The reason this is necessary is that FRAPI's routing system cannot handle a route that has an optional argument. Since the PUT action will not require a user id it needs to be created seperately.</p>
 
 <p>First up is our PUT action. Note the custom route does not contain a :user_id on the end. The : is how we define variables in our custom routes.</p>
 
@@ -117,7 +115,7 @@
 
 <p><img src="/images/admin_add_action_example2.png" alt="Add User action" /></p>
 
-<p>Once you have the above data entered, click "Save" to save your action. Then "Sync Now" to have Frapi generate the skeleton code in your FRAPI_PATH/src/frapi/custom/Action directory.</p>
+<p>Once you have the above data entered, click "Save" to save your action. Then "Sync Now" to have FRAPI generate the skeleton code in your FRAPI_PATH/src/frapi/custom/Action directory.</p>
 
 <p>Now that your skeleton code has been created please proceed to the <a href="coding-actions.html">Coding Actions</a> section for details on how to code the actions you just created.</p>
 
