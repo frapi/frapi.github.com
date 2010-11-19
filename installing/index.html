@@ -61,13 +61,13 @@ PHP scripts correctly.</p>
 <p>FRAPI also has dependencies on the following modules:</p>
 
 <ul>
-    <li><a href="http://php.net/manual/en/book.apc.php">APC</a>: Required for caching of actions, errors, etc</li>
-    <li><a href="http://pecl.php.net/pecl_http">pecl_http</a></li>
-    <li><a href="http://pear.php.net/">PEAR</a></li>
-    <li><a href="http://pear.php.net/HTTP_Request2">PEAR::HTTP_Request2</a>:
+    <li><em>(Enabled by default and strongly recommended)</em> <a href="http://php.net/manual/en/book.apc.php">APC</a>: Required for caching of actions, errors, etc</li>
+    <li><em>(Required by the admin interface)</em> <a href="http://pecl.php.net/pecl_http">pecl_http</a></li>
+    <li><em>(Required)</em> <a href="http://pear.php.net/">PEAR</a></li>
+    <li><em>(Required)</em> <a href="http://pear.php.net/HTTP_Request2">PEAR::HTTP_Request2</a>:
     Required by the bundled <a href="http://github.com/till/armchair">ArmChair</a> package. At some point this may be
     replaced by pecl_http.</li>
-    <li><a href="http://php.net/gettext">PHP Gettext</a> is used for multilingualism in the administration interface. On Ubuntu Linux, install the package php-gettext.</li>
+    <li><em>(Required by the admin interface)</em> <a href="http://php.net/gettext">PHP Gettext</a> is used for multilingualism in the administration interface. On Ubuntu Linux, install the package php-gettext.</li>
 </ul>
 
 <h3 id="frapi.installing.requirements.and.dependencies.redis">Redis</h3>
@@ -78,8 +78,8 @@ PHP scripts correctly.</p>
 <h3 id="frapi.installing.requirements.and.dependencies.unit.tests">Unit Tests</h3>
 
 <ul>
-    <li><a href="http://www.phpunit.de/">PHPUnit</a>: Required for running unit tests</li>
-    <li><a href="http://xdebug.org/">XDebug</a>: Required for generating 
+    <li><em>(Optional)</em> <a href="http://www.phpunit.de/">PHPUnit</a>: Required for running unit tests</li>
+    <li><em>(Optional)</em> <a href="http://xdebug.org/">XDebug</a>: Required for generating 
     <a href="http://www.phpunit.de/manual/current/en/code-coverage-analysis.html">code coverage analysis</a> reports</li>
     <li>APC must be enabled on the command line (See <a href="http://www.php.net/manual/en/apc.configuration.php#ini.apc.enable-cli">apc.enable_cli</a>)</li>
 </ul>
