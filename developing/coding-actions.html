@@ -201,7 +201,7 @@ class ActionX ... {
     {
         // Consider a batch delete
         // Fetch the $_REQUEST['users'] which is 
-        // users[]=1&users[]=2&users=3 as an array.
+        // users[]=1&users[]=2&users[]=3 as an array.
         $users = $this->getParam('users', self::TYPE_ARRAY);
         foreach ($users as $key => $user) {
             echo $user;
