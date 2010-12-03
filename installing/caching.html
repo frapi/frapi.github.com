@@ -1,0 +1,95 @@
+<script type="text/javascript" charset="utf-8" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/jquery.include.js"></script>
+<script src="/js/script.js"></script>
+
+<title>Caching Mechanisms</title>
+
+<include src="/includes/header.html"></include>
+
+<h1>Caching Mechanisms</h1>
+
+<p>The PHP world benefits from a very large community that have done consistent work on most of the popular caching mechanisms available today. FRAPI takes advantage of the extensions and software engineering time that has already been invested by giving its developers the choice of using the mechanism of their choice. Those adapters are built-in FRAPI and require only a single line of code change in order for the developers to be taking full advantages of their favourite caching mechanisms.</p>
+
+<p>This document will walk you through the subtleties of configuring your cache adapter:</p>
+
+<ul>
+    <li><a href="#frapi.caching.mechanisms.intro">Essential understanding</a></li>
+    <li><a href="#frapi.caching.mechanisms.apc">Using APC as your caching mechanism</a></li>
+    <li><a href="#frapi.caching.mechanisms.memcache">Using Memcached as your caching mechanism</a></li>
+    <li><a href="#frapi.caching.mechanisms.redis">Using Redis as your caching mechanism</a></li>
+    <li><a href="#frapi.caching.mechanisms.wincache">Using WinCache as your caching mechanism</a></li>
+    <li><a href="#frapi.caching.mechanisms.zenddisk">Using Zend Disk as your caching mechanism</a></li>
+    <li><a href="#frapi.caching.mechanisms.zendshm">Using Zend Shm as your caching mechanism</a></li>
+    <li><a href="#frapi.caching.mechanisms.dummy">Using without caching</a></li>
+    <li><a href="#frapi.caching.mechanisms.caveats">Current caveats</a></li>
+    <li><a href="#frapi.caching.mechanisms.want">Request a missing adapter</a></li>
+</ul>
+
+<h3 id="frapi.caching.mechanisms.intro">Essential understanding</h3>
+<p>In order to use your caching adapter of choice, FRAPI requires the developers to manually modify the only configuration line that FRAPI currently has. The configuration file is located in <em>FRAPI_PATH/src/frapi/custom/AllFiles.php</em>. When you open that file, one might notice the only defined constant in that file called <em>FRAPI_CACHE_ADAPTER</em>. In order to use the caching mechanism of your choice, you will need to modify this to be either apc, memcached, redis, wincache, zenddisk, zendshm or dummy.<p> 
+    
+<p>Please note that in future versions of FRAPI, the administration interface will allow developers to specify their caching adapters and servers.</p>
+    
+<h3 id="frapi.caching.mechanisms.apc">Using APC as your caching mechanism</h3>
+<p>FRAPI employs the Alternative PHP Cache &mdash; <a href="http://pecl.php.net/apc" title="Alternative PHP Cache">APC</a> &mdash; as the default caching adapter. This means that when you either clone or download FRAPI, the default <em>FRAPI_CACHE_ADAPTER</em> constant is set to <em>apc</em>.</p>
+
+<p>If you do not have APC installed and you wish to run APC, you will need to follow <a href="http://php.net/manual/en/apc.installation.php" title="Installing APC">the instructions here</a>.</p>
+    
+<h3 id="frapi.caching.mechanisms.memcache">Using Memcached as your caching mechanism</h3>
+<p>If your favourite caching mechanism is Memcached, you may use the "memcached" caching adapter with FRAPI. Currently, the memcached caching adapter only connects to localhost by default. It is currently not possible to make FRAPI connect to a memcached-cluster for the configuration and internal caching. This is a feature coming in the short future. </p>
+
+<p>
+    It is possible to connect manually to a cluster of memcached servers in your models like such:
+</p>
+
+<p>
+    <code>
+    <pre>
+    $options = array(
+        'servers' => array(
+            '192.168.2.1' => 11211,
+            '192.168.2.2' => 11211,
+        )
+    );
+    
+    $cache = Frapi_Cache::getInstance('memcached', $options);
+    $cache->add('foo', 'bar');
+    echo $cache->get('foo');
+    $cache->delete('foo');
+    </pre>
+    </code>
+</p>
+
+<p>The FRAPI memcached adapter uses the PHP <a href="http://php.net/memcached" title="PHP Memcached">memcached</a> extension. In order to install the memcached extension,  please follow the <a href="http://php.net/manual/en/memcached.installation.php" title="Installing memcached">instructions here.</a></p>
+
+<p>Once you finished installing the extension and you restarted your webserver, set your <em>FRAPI_CACHE_ADAPTER</em> constant to <em>memcached</em> and FRAPI will now be interacting with the Memcached server on 127.0.0.1 and port 11211.</p>
+
+<p>Note that it is also possible to use the <a href="http://php.net/memcache">memcache</a> extension. In order to use the <em>memcache</em> adapter, you will need to modify your <em>FRAPI_CACHE_ADAPTER</em> constant and set it to <em>memcache</em>.
+
+<p><em>It is currently not possible to set the cluster information from the administration interface but it is a planned feature.</em> Should you wish to modify the location of the default server, you have to modify the file <em>FRAPI_PATH/src/frapi/library/Frapi/Cache/Adapter/Memcached.php</em> to point to your own server. Again, it is important to note that this functionality will be added in the administration interface.</p>
+    
+<h3 id="frapi.caching.mechanisms.redis">Using Redis as your caching mechanism</h3>
+<p>The FRAPI Redis caching adapter uses the <a href="https://github.com/owlient/phpredis">phpredis</a> extension from owlient. Should you wish to install the extension, please follow the <a href="https://github.com/owlient/phpredis/blob/master/README.markdown" title="phpredis-owlient">instructions here</a>. </p>
+
+<p>Once you finished installing the extension and you restarted your webserver, set your <em>FRAPI_CACHE_ADAPTER</em> constant to <em>redis</em> and FRAPI will now be interacting with the Redis server on 127.0.0.1 and port 6379.</p>
+
+<p><em>It is currently not possible to set the cluster information from the administration interface but it is a planned feature.</em> Should you wish to modify the location of the default server, you have to modify the file <em>FRAPI_PATH/src/frapi/library/Frapi/Cache/Adapter/Redis.php</em> to point to your own server. Again, it is important to note that this functionality will be added in the administration interface.</p>
+    
+<h3 id="frapi.caching.mechanisms.wincache">Using WinCache as your caching mechanism</h3>
+<p>For developers who wish to use the WinCache caching mechanism, the first thing they will have to do is <a href="http://php.net/manual/en/wincache.installation.php" title="installing WinCache">install the WinCache extension</a>.</p>
+    
+<p>Once you finished installing the extension and you restarted your webserver, set your <em>FRAPI_CACHE_ADAPTER</em> constant to <em>wincache</em> and FRAPI will now be interacting with the WinCache caching mechanism.</p>
+
+<h3 id="frapi.caching.mechanisms.zenddisk">Using Zend Disk as your caching mechanism</h3>
+
+<p>For developers using Zend Server, they have access to the Zend Disk caching mechanism. In order to use all the potential of the extension, the only thing developers using Zend Server have to do is set the <em>FRAPI_CACHE_ADAPTER</em> constant to <em>zenddisk</em>. This will automatically make FRAPI use the <a href="http://files.zend.com/help/Zend-Platform/zend_cache_api.htm" title="Zend Server Caching Mechanism">zenddisk caching mechanism</a>.</p>
+    
+<h3 id="frapi.caching.mechanisms.zendshm">Using Zend Shm as your caching mechanism</h3>
+
+<p>For developers using Zend Server, they have access to the Zend Shm caching mechanism. In order to use all the potential of the extension, the only thing developers using Zend Server have to do is set the <em>FRAPI_CACHE_ADAPTER</em> constant to <em>zendshm</em>. This will automatically make FRAPI use the <a href="http://files.zend.com/help/Zend-Platform/zend_cache_api.htm" title="Zend Server Caching Mechanism">zendshm caching mechanism</a>.</p>
+
+<h3 id="frapi.caching.mechanisms.dummy">Using without Caching</h3>
+<p>This is something we highly discourage considering the nature of the FRAPI configuration files that are normally cached. However, for developers that do not have a caching mechanism and that would wish to simply use FRAPI to test and experiment, one can set the <em>FRAPI_CACHE_ADAPTER</em> constant to <em>dummy</em> and FRAPI will act as if there was a caching adapter without doing actual caching. </p>
+
+<h3 id="frapi.caching.mechanisms.want">Request a missing adapter</h3>
+<p>If you would like to see another caching adapter you can always <a href="http://github.com/frapi/frapi" title="FRAPI API Framework">propose a patch by forking us on github</a> or if you have neither time nor interest to develop an adapter you'd like in FRAPI, you can always send an email to the <a href="http://groups.google.com/group/frapi-dev" title="FRAPI developers mailing list">frapi-dev</a> mailing list requesting the caching adapter you want with documentation links &mdash; if possible.</p>
