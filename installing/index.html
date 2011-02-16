@@ -282,15 +282,16 @@ server {
     listen   80;
     server_name  admin.frapi;
     access_log  /var/log/nginx/admin.frapi/access.log;
-    
+
+    root   FRAPI_PATH/src/frapi/admin/public;
+    index index.php;
+
     location / {
-        if (-f $request_filename) {
-            break;
-        }
-        
-        rewrite  ^/(.*)$  /index.php?$1  last;
-        root   FRAPI_PATH/src/frapi/admin/public;
-        index  index.php;
+        try_files $uri $uri/ @api;
+    }
+
+    location @api {
+        rewrite ^/(.*)$ /index.php?$1 last;
     }
 
     location ~ \.php$ {
@@ -324,14 +325,19 @@ server {
     server_name  api.frapi;
     access_log  /var/log/nginx/api.frapi/access.log;
                                                                      
+    root     FRAPI_PATH/src/frapi/public;
+    index    index.php;
+
+    location ~* ^.+\.(jpg|js|jpeg|png|ico|gif|js|css|swf)$ {
+        expires 24h;
+    }
+
     location / {
-        if (-e $request_filename) {
-            break;
-        }
-                                                                                                                         
+        try_files $uri $uri/ @api;
+    }
+
+    location @api {        
         rewrite  ^/(.*)$  /index.php?$1  last;
-        root     FRAPI_PATH/src/frapi/public;
-        index    index.php;
     }
                                                                                                                                               
     location ~ ^/.*\.php$ {
