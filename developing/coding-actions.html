@@ -185,7 +185,7 @@ class ActionX ... {
         
         // Fetch the $_GET['name'] as an 
         // htmlspecialentities/htmlspecialchars string.
-        $nameAsHtmlEscaped = $this->getParam('name'; self::TYPE_OUTPUT);
+        $nameAsHtmlEscaped = $this->getParam('name', self::TYPE_OUTPUT);
         
         // Fetch the $_GET['name'] as an int
         $nameAsInteger = $this->getParam('name', self::TYPE_INT);
