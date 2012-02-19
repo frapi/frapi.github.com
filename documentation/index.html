@@ -1,0 +1,65 @@
+<script type="text/javascript" charset="utf-8" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/jquery.include.js"></script>
+<script src="/js/script.js"></script>
+
+<title>Documenting Your API</title>
+
+<include src="/includes/header.html"></include>
+
+<h1 id="frapi.documenting">Documenting Your API</h1>
+
+<p>
+	A vital part of having an API is ensuring people can use it. This means having great documentation. To help with this, FRAPI includes a simple documentation generator for exposing your APIs details automatically.
+</p>
+
+<ul>
+	<li><a href="#frapi.documenting.overview">Overview</a></li>
+	<li><a href="#frapi.documenting.installation">Installation</a></li>
+	<li><a href="#frapi.documenting.writing">Writing Documentation</a></li>
+</ul>
+
+<h2 id="frapi.documenting.overview">Overview</h2>
+
+<p>
+	FRAPI's automatic documentation supports extended markdown syntax, and automatic <em>PHP</em> syntax highlighting. It will automatically display all enabled actions, their arguments, and descriptions; as well as errors and output formats/mimetypes.
+</p>
+
+<h2 id="frapi.documenting.installation">Installation</h2>
+
+<p>
+	FRAPI comes with the documentation pre-installed, and available via the <code>GET /</code> action (e.g. at the API root). By default, this uses the name "Introduction", and the documentation is rendered using the <code>/custom/Output/html/Introduction.html.tpl</code> template. <em>If you change the name, do not forget to move the template</em>.
+</p>
+
+<p>
+	The template will automatically split out the <code>/</code> action as introductory documentation. If you wish to move the documentation (e.g. to <code>/docs</code>), you will have to update the template to reflect this.
+</p>
+
+<p>
+	To remove the documentation, simple delete the action, and the template file.
+</p>
+
+<h2 id="frapi.documenting.writing">Writing Documentation</h2>
+
+<p>
+	The default template uses the Action and Error descriptions, as entered into the FRAPI admin. Simple enter in plain text, or Extended Markdown, and it will display in the documentation (note: do not forget to sync your changes!).
+</p>
+
+<h3>Using Markdown</h3>
+
+<p>
+	FRAPI's documentation template understands <a href="http://daringfireball.net/projects/markdown/syntax">standard markdown</a> as well as the changes and additions implemented by <a href="http://michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</a>.
+</p>
+
+<p>
+	Furthermore, you can also add PHP syntax highlighting in examples by using the following syntax:
+</p>
+
+<pre>
+	```php
+	echo "Hello World";
+	```
+</pre>
+
+<p><strong>Note:</strong> Do not include opening and closing PHP tags.</p>
+
+<include src="/includes/footer.html"></include>
