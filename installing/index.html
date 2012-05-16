@@ -26,7 +26,6 @@ before you begin the install.</p>
     <li><a href="#frapi.installing.getting.frapi">Getting FRAPI</a>
         <ul>
             <li><a href="#frapi.installing.getting.frapi.cloning">Cloning the FRAPI Repository</a></li>
-            <li><a href="#frapi.installing.getting.frapi.downloading.tarball">Downloading the Tarball</a></li>
         </ul>
     </li>
     <li><a href="#frapi.installing.directory.and.file.permissions">Setting Directory and File Permissions</a>
@@ -83,16 +82,18 @@ PHP scripts correctly.</p>
 
 <h2 id="frapi.installing.getting.frapi">Getting FRAPI</h2>
 
-<p>You can get FRAPI in one of two ways: cloning the FRAPI repository or downloading the latest FRAPI source as a tarball.</p>
+<p>While FRAPI is in active development, we recommend installing via a clone of the FRAPI git repository.</p>
 
 <h3 id="frapi.installing.getting.frapi.cloning">Cloning the FRAPI Repository</h3>
 
 <p>Go to the directory where you want to install FRAPI and do the following:</p>
-<p><code>git clone git://github.com/frapi/frapi.git</code></p>
 
-<h3 id="frapi.installing.getting.frapi.downloading.tarball">Downloading the Tarball</h3>
-<p>Go to <a href="https://github.com/frapi/frapi/tarball/master">https://github.com/frapi/frapi/tarball/master</a> and download the tar.gz to your install directory.</p>
-<p>Uncompress the tar using the <code>tar -xzvf frapi-frapi-VERSION.tar.gz</code> command.</p>
+<pre>
+    git clone git://github.com/frapi/frapi.git
+    cd frapi
+    git submodule init
+    git submodule update
+</pre>
 
 <h2 id="frapi.installing.directory.and.file.permissions">Setting Directory and File Permissions</h2>
 
@@ -137,8 +138,7 @@ chmod 775 FRAPI_PATH/src/frapi/custom/Config/
 chmod 664 FRAPI_PATH/src/frapi/custom/Config/*.xml
 </pre>
 
-<p>If you're using Linux you could run the <code>FRAPI_PATH/setup.sh</code> script. The <code>setup.sh</code> script will
-initialize the <a href="http://github.com/till/armchair">ArmChair</a> submodule and set directory permissions with the commands you see above.</p>
+<p>If you're using Linux you could run the <code>FRAPI_PATH/setup.sh</code> script. The <code>setup.sh</code> script will set directory permissions with the commands you see above.</p>
 
 <pre>sudo sh setup.sh</pre>
 
