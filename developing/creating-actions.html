@@ -103,7 +103,7 @@
     </code>
 </p>
 
-<p>Now we need to create two actions. One will be for handling the PUT action, the other for GET, POST, DELETE and HEAD. The reason this is necessary is that FRAPI's routing system cannot handle a route that has an optional argument. Since the PUT action will not require a user id it needs to be created seperately.</p>
+<p>Now we need to create two actions. One will be for handling the POST action, the other for GET, PUT, DELETE and HEAD. The reason this is necessary is that FRAPI's routing system cannot handle a route that has an optional argument. Since the POST action will not require a user id it needs to be created seperately.</p>
 
 <p>First up is our PUT action. Note the custom route does not contain a :user_id on the end. The : is how we define variables in our custom routes.</p>
 
@@ -111,7 +111,7 @@
 
 <p>Once you have the above data entered, click "Save" to save your action.</p>
 
-<p>Next up is our action to handle GET, POST, DELETE and HEAD. Since all of these methods require a user id to function properly we add :user_id to the end of our custom route</p>
+<p>Next up is our action to handle GET, PUT, DELETE and HEAD. Since all of these methods require a user id to function properly we add :user_id to the end of our custom route</p>
 
 <p><img src="/images/admin_add_action_example2.png" alt="Add User action" /></p>
 
