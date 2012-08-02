@@ -94,6 +94,9 @@ PHP scripts correctly.</p>
 <p>Go to <a href="https://github.com/frapi/frapi/tarball/master">https://github.com/frapi/frapi/tarball/master</a> and download the tar.gz to your install directory.</p>
 <p>Uncompress the tar using the <code>tar -xzvf frapi-frapi-VERSION.tar.gz</code> command.</p>
 
+<h3 id="frapi.installing.getting.frapi.downloading.tarball">Install required submodule</h3>
+<p>From within the FRAPI_PATH root directory, run <code>git submodule update --init</code> to install the required Ace (Ajax.org Cloud9 Editor) submodule.</p>
+
 <h2 id="frapi.installing.directory.and.file.permissions">Setting Directory and File Permissions</h2>
 
 <p>You're about see a lot of references to something called
@@ -187,11 +190,11 @@ in Apache with the following configuration:</p>
 &lt;VirtualHost *:80&gt;
     ServerName api.frapi
     ServerAdmin admin@api.frapi
-    DocumentRoot FRAPI_PATH/src/frapi/public 
-
+    
     # This should be omitted in the production environment
     SetEnv APPLICATION_ENV development
-                  
+
+    DocumentRoot FRAPI_PATH/src/frapi/public
     &lt;Directory FRAPI_PATH/src/frapi/public&gt;
         AllowOverride All
         Order deny,allow
